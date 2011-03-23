@@ -51,7 +51,8 @@ javascripts:
   finder:
     - public/javascripts/friend-finder.js
   home:
-    - public/javascripts/publisher.js
+    - public/javascripts/widgets/publisher.js
+    - public/javascripts/widgets/publisher.mentions.js
     - public/javascripts/aspect-filters.js
     - public/javascripts/contact-list.js
     - public/javascripts/aspect-edit-pane.js

@@ -3,17 +3,16 @@
 -#   the COPYRIGHT file.
 
 
-= javascript_include_tag "publisher.js"
+= javascript_include_tag "widgets/publisher.js"
 
 :javascript
-  $(document).ready(function() 
-    {
-      var person = {name: '#{@person.name}', handle: '#{@person.diaspora_handle}' };
-      Publisher.autocompletion.onSelect($("#status_message_fake_text"),person,'#{@person.name}');
-      $("#publisher #status_message_fake_text").val(function(index, value){ return value + " " });
-      $("#publisher").bind('ajax:success', function(){location.reload();});
-      Publisher.open();
-    });
+  $(document).ready(function() {
+    Diaspora.widgets.publisher.mentions.contacts = [{name: '#{@person.name}', handle: '#{@person.diaspora_handle}' }];
+    Diaspora.widgets.publisher.mentions.onSelect($("#status_message_fake_text"),person,'#{@person.name}');
+    $("#publisher #status_message_fake_text").val(function(index, value){ return value + " " });
+    $("#publisher").bind('ajax:success', function(){location.reload();});
+    Diaspora.widgets.publisher.mentions.open();
+  });
 
 #new_status_message_pane
   .span-15.last
