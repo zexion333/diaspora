@@ -23,7 +23,8 @@
       widgetId = namespaces.pop(),
       namespace = this.namespace(namespaces);
 
-    delete namespace[widgetId];
+    delete namespace[0][widgetId];
+    delete namespace[1][widgetId];
   };
 
   WidgetCollection.prototype.namespace = function(namespaces) {
