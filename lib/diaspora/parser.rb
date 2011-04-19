@@ -6,9 +6,11 @@ module Diaspora
   module Parser
     def self.from_xml(xml)
       doc = Nokogiri::XML(xml) { |cfg| cfg.noblanks }
-      return unless body = doc.xpath("/XML/post").children.first
-      class_name = body.name.gsub('-', '/')
-      class_name.camelize.constantize.from_xml body.to_s
+      doc.xpath('/XML/post').children.inject([]) do |result, object|
+        class_name = body.name.gsub('-', '/')
+        marshalled_object = class_name.camelize.constantize.from_xml body.to_s
+        result << marshalled_object
+      end
     end
   end
 end
