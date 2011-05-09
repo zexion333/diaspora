@@ -2,14 +2,14 @@ class TagNameUniqueness < ActiveRecord::Migration
   def self.downcase_tags
     execute <<SQL
       UPDATE tags
-      SET tags.name = LOWER(tags.name)
-      WHERE tags.name != LOWER(tags.name)
+      SET name = LOWER(name)
+      WHERE name != LOWER(name)
 SQL
   end
   def self.consolidate_duplicate_tags
     duplicate_rows = execute <<SQL
-    SELECT count(tags.name), tags.name FROM tags
-      GROUP BY tags.name
+    SELECT count(name), name FROM tags
+      GROUP BY name
         HAVING COUNT(*) > 1
 SQL
     duplicate_rows.each do |row|
@@ -18,14 +18,14 @@ SQL
       id_to_keep = tag_ids.pop
       execute <<SQL
               UPDATE IGNORE taggings
-                SET taggings.tag_id = #{id_to_keep}
-                WHERE taggings.tag_id IN (#{tag_ids.join(',')})
+                SET tag_id = #{id_to_keep}
+                WHERE tag_id IN (#{tag_ids.join(',')})
 SQL
       execute <<SQL
-        DELETE FROM taggings WHERE taggings.tag_id IN (#{tag_ids.join(',')})
+        DELETE FROM taggings WHERE tag_id IN (#{tag_ids.join(',')})
 SQL
 
-      execute("DELETE FROM tags WHERE tags.id IN (#{tag_ids.join(',')})")
+      execute("DELETE FROM tags WHERE id IN (#{tag_ids.join(',')})")
     end
   end
 

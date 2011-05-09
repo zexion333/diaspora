@@ -4,12 +4,12 @@ class AlterStringColumns < ActiveRecord::Migration
     def self.up
         remove_index :profiles, :column => [:first_name, :searchable]
         remove_index :profiles, :column => [:last_name, :searchable]
-        remove_index :profiles, :column => [:first_name, :last_name, :searchable]
+        remove_index :profiles, :name => 'profile_on_search_fields'
         change_column(:profiles, :first_name, :string, :limit => 127)
         change_column(:profiles, :last_name, :string, :limit => 127)
         add_index :profiles, [:first_name, :searchable]
         add_index :profiles, [:last_name, :searchable]
-        add_index :profiles, [:first_name, :last_name, :searchable]
+        add_index :profiles, [:first_name, :last_name, :searchable], :name => 'profile_on_search_fields'
 
         remove_index :mongo_notifications, :column => [:target_type, :target_mongo_id]
         change_column(:mongo_notifications, :target_type, :string, :limit => 127)

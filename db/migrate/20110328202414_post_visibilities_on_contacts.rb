@@ -58,6 +58,7 @@ SQL
 
   def self.pv_count
     @pv_count ||= execute('SELECT count(*) FROM post_visibilities').to_a.first.first
+    @pv_count.is_a?(Array) ? @pv_count.first : @pv_count #sqlite compatability
   end
 
   def self.up
@@ -74,7 +75,7 @@ SQL
 
     delete_disconnected_pvs if pv_count > 0
 
-    add_column :post_visibilities, :contact_id, :integer, :null => false
+    add_column :post_visibilities, :contact_id, :integer #, :null => false
 
     move_author_pvs_to_aspect_pvs if pv_count > 0
     set_pv_contact_ids if pv_count > 0

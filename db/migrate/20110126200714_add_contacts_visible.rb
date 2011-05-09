@@ -5,7 +5,7 @@ class AddContactsVisible < ActiveRecord::Migration
 
     ActiveRecord::Base.connection.execute <<-SQL
     UPDATE aspects
-      SET contacts_visible = false
+      SET contacts_visible = 0
       WHERE contacts_visible IS NULL
     SQL
   end

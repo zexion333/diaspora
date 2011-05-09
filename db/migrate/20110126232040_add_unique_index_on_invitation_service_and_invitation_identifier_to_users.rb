@@ -2,7 +2,7 @@ class AddUniqueIndexOnInvitationServiceAndInvitationIdentifierToUsers < ActiveRe
   def self.up
     change_column(:users, :invitation_service, :string, :limit => 127)
     change_column(:users, :invitation_identifier, :string, :limit => 127)
-    add_index(:users, [:invitation_service, :invitation_identifier], :unique => true)
+    add_index(:users, [:invitation_service, :invitation_identifier], :unique => true, :name => 'users_on_invitations')
   end
 
   def self.down

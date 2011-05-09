@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
     t.datetime "updated_at"
   end
 
-  add_index "aspect_memberships", ["aspect_id", "contact_id"], :name => "index_aspect_memberships_on_aspect_id_and_contact_id", :unique => true
+  add_index "aspect_memberships", ["aspect_id", "contact_id"], :name => "am_on_a_id_and_c_id", :unique => true
   add_index "aspect_memberships", ["aspect_id"], :name => "index_aspect_memberships_on_aspect_id"
   add_index "aspect_memberships", ["contact_id"], :name => "index_aspect_memberships_on_contact_id"
 
@@ -101,8 +101,6 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
     t.datetime "updated_at"
   end
 
-  add_index "conversations", ["author_id"], :name => "conversations_author_id_fk"
-
   create_table "invitations", :force => true do |t|
     t.text     "message"
     t.integer  "sender_id",    :null => false
@@ -129,7 +127,6 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
     t.datetime "updated_at"
   end
 
-  add_index "likes", ["author_id"], :name => "likes_author_id_fk"
   add_index "likes", ["guid"], :name => "index_likes_on_guid", :unique => true
   add_index "likes", ["post_id"], :name => "index_likes_on_post_id"
 
@@ -154,7 +151,6 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
-  add_index "messages", ["conversation_id"], :name => "messages_conversation_id_fk"
 
   create_table "mongo_notifications", :force => true do |t|
     t.string   "mongo_id"
@@ -216,7 +212,7 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "hidden",     :default => false, :null => false
-    t.integer  "contact_id",                    :null => false
+    t.integer  "contact_id"
   end
 
   add_index "post_visibilities", ["contact_id", "post_id"], :name => "index_post_visibilities_on_contact_id_and_post_id", :unique => true
@@ -269,7 +265,7 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
     t.string   "location"
   end
 
-  add_index "profiles", ["first_name", "last_name", "searchable"], :name => "index_profiles_on_first_name_and_last_name_and_searchable"
+  add_index "profiles", ["first_name", "last_name", "searchable"], :name => "profile_on_search_fields"
   add_index "profiles", ["first_name", "searchable"], :name => "index_profiles_on_first_name_and_searchable"
   add_index "profiles", ["last_name", "searchable"], :name => "index_profiles_on_last_name_and_searchable"
   add_index "profiles", ["mongo_id"], :name => "index_profiles_on_mongo_id"
@@ -376,48 +372,9 @@ ActiveRecord::Schema.define(:version => 20110507212759) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["invitation_service", "invitation_identifier"], :name => "index_users_on_invitation_service_and_invitation_identifier", :unique => true
+  add_index "users", ["invitation_service", "invitation_identifier"], :name => "altered_users_on_invitations", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
   add_index "users", ["mongo_id"], :name => "index_users_on_mongo_id"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
-
-  add_foreign_key "aspect_memberships", "aspects", :name => "aspect_memberships_aspect_id_fk"
-  add_foreign_key "aspect_memberships", "contacts", :name => "aspect_memberships_contact_id_fk", :dependent => :delete
-
-  add_foreign_key "aspect_visibilities", "aspects", :name => "aspect_visibilities_aspect_id_fk", :dependent => :delete
-  add_foreign_key "aspect_visibilities", "posts", :name => "aspect_visibilities_post_id_fk", :dependent => :delete
-
-  add_foreign_key "comments", "people", :name => "comments_author_id_fk", :column => "author_id", :dependent => :delete
-  add_foreign_key "comments", "posts", :name => "comments_post_id_fk", :dependent => :delete
-
-  add_foreign_key "contacts", "people", :name => "contacts_person_id_fk", :dependent => :delete
-
-  add_foreign_key "conversation_visibilities", "conversations", :name => "conversation_visibilities_conversation_id_fk", :dependent => :delete
-  add_foreign_key "conversation_visibilities", "people", :name => "conversation_visibilities_person_id_fk", :dependent => :delete
-
-  add_foreign_key "conversations", "people", :name => "conversations_author_id_fk", :column => "author_id", :dependent => :delete
-
-  add_foreign_key "invitations", "users", :name => "invitations_recipient_id_fk", :column => "recipient_id", :dependent => :delete
-  add_foreign_key "invitations", "users", :name => "invitations_sender_id_fk", :column => "sender_id", :dependent => :delete
-
-  add_foreign_key "likes", "people", :name => "likes_author_id_fk", :column => "author_id"
-  add_foreign_key "likes", "posts", :name => "likes_post_id_fk"
-
-  add_foreign_key "messages", "conversations", :name => "messages_conversation_id_fk", :dependent => :delete
-  add_foreign_key "messages", "people", :name => "messages_author_id_fk", :column => "author_id", :dependent => :delete
-
-  add_foreign_key "notification_actors", "notifications", :name => "notification_actors_notification_id_fk", :dependent => :delete
-
-  add_foreign_key "post_visibilities", "contacts", :name => "post_visibilities_contact_id_fk", :dependent => :delete
-  add_foreign_key "post_visibilities", "posts", :name => "post_visibilities_post_id_fk", :dependent => :delete
-
-  add_foreign_key "posts", "people", :name => "posts_author_id_fk", :column => "author_id", :dependent => :delete
-
-  add_foreign_key "profiles", "people", :name => "profiles_person_id_fk", :dependent => :delete
-
-  add_foreign_key "requests", "people", :name => "requests_recipient_id_fk", :column => "recipient_id", :dependent => :delete
-  add_foreign_key "requests", "people", :name => "requests_sender_id_fk", :column => "sender_id", :dependent => :delete
-
-  add_foreign_key "services", "users", :name => "services_user_id_fk", :dependent => :delete
 
 end

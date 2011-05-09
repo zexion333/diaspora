@@ -13,7 +13,7 @@ class CreateSchema < ActiveRecord::Migration
       t.timestamps
     end
     add_index :aspect_memberships, :aspect_id
-    add_index :aspect_memberships, [:aspect_id, :contact_id], :unique => true
+    add_index :aspect_memberships, [:aspect_id, :contact_id], :unique => true, :name => 'am_on_a_id_and_c_id'
     add_index :aspect_memberships, :contact_id
 
     create_table :comments do |t|
@@ -119,7 +119,7 @@ class CreateSchema < ActiveRecord::Migration
     end
     add_index :profiles, [:first_name, :searchable]
     add_index :profiles, [:last_name, :searchable]
-    add_index :profiles, [:first_name, :last_name, :searchable]
+    add_index :profiles, [:first_name, :last_name, :searchable], :name => 'profile_on_search_fields'
     add_index :profiles, :person_id
 
     create_table :requests do |t|
