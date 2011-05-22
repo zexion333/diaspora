@@ -9,7 +9,10 @@ class PhotosController < ApplicationController
 
   def index
     @post_type = :photos
-    @person = Person.find_by_id(params[:person_id])
+    
+    if params[:username].present? and params[:pod].present?
+      @person = Person.where(:diaspora_handle => "#{params[:username]}@#{params[:pod]}").first
+    end
 
     if @person
       @profile = @person.profile
@@ -128,12 +131,12 @@ class PhotosController < ApplicationController
           if photo.status_message_id
             respond_with photo, :location => photo.status_message
           else
-            respond_with photo, :location => person_photos_path(current_user.person)
+            respond_with photo, :location => original_person_photos_path(:username => current_user.person.username, :pod => current_user.person.pod)
           end
         end
       end
     else
-      respond_with photo, :location => person_photos_path(current_user.person)
+      respond_with photo, :location => original_person_photos_path(:username => current_user.person.username, :pod => current_user.person.pod)
     end
   end
 
@@ -176,7 +179,8 @@ class PhotosController < ApplicationController
     if @photo = current_user.posts.where(:id => params[:id]).first
       respond_with @photo
     else
-      redirect_to person_photos_path(current_user.person)
+      redirect_to original_person_photos_path(:username => current_user.person.username,
+                                              :pod => current_user.person.pod)
     end
   end
 
@@ -196,7 +200,7 @@ class PhotosController < ApplicationController
         end
       end
     else
-      redirect_to person_photos_path(current_user.person)
+      redirect_to original_person_photos_path(:username => current_user.person.username, :pod => current_user.person.pod)
     end
   end
 

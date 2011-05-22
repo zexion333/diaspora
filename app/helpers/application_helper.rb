@@ -120,9 +120,31 @@ module ApplicationHelper
     end
     
     if opts.empty?
-      orgiginal_person_path(opts)
+      original_person_path(opts)
     else
       original_person_path(obj, opts)
+    end
+  end
+  
+  def person_photos_path(obj, opts={})
+    if obj.is_a?(Person)
+      return original_person_photos_path(opts.merge(:username => obj.username, :pod => obj.pod))
+    end
+    
+    if opts.empty? and obj.is_a?(Hash)
+      id = obj.delete(:id)
+    else
+      id = opts.delete(:id)
+    end
+    
+    if id
+      return person_photos_path(Person.where(:id => id))
+    end
+    
+    if opts.empty?
+      original_person_photos_path(opts)
+    else
+      original_person_photos_path(obj, opts)
     end
   end
 end

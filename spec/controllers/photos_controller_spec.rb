@@ -36,13 +36,13 @@ describe PhotosController do
 
   describe '#index' do
     it "displays the logged in user's pictures" do
-      get :index, :person_id => alice.person.id.to_s
+      get :index, :username => alice.person.username, :pod => alice.person.pod
       assigns[:person].should == alice.person
       assigns[:posts].should == [@alices_photo]
     end
 
     it "displays another person's pictures" do
-      get :index, :person_id => bob.person.id.to_s
+      get :index, :username => bob.person.username, :pod => bob.person.pod
       assigns[:person].should == bob.person
       assigns[:posts].should == [@bobs_photo]
     end
@@ -124,7 +124,9 @@ describe PhotosController do
 
     it "redirects when the user does not own the photo" do
       get :edit, :id => @bobs_photo.id
-      response.should redirect_to(:action => :index, :person_id => alice.person.id.to_s)
+      response.should redirect_to(:action => :index,
+                                  :username => alice.person.username,
+                                  :pod => alice.person.pod)
     end
   end
 
@@ -168,7 +170,9 @@ describe PhotosController do
     it 'redirects if you do not have access to the post' do
       params = { :text => "now with lasers!" }
       put :update, :id => @bobs_photo.id, :photo => params
-      response.should redirect_to(:action => :index, :person_id => alice.person.id.to_s)
+      response.should redirect_to(:action => :index,
+                                  :username => alice.person.username,
+                                  :pod => alice.person.pod)
     end
   end
 
