@@ -101,6 +101,14 @@ class Person < ActiveRecord::Base
                 profile.first_name.to_s
               end
   end
+  
+  def username
+    self.diaspora_handle.split('@').first
+  end
+  
+  def pod
+    self.diaspora_handle.split('@').last
+  end
 
   def owns?(obj)
     self == obj.author

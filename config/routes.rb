@@ -86,11 +86,17 @@ Diaspora::Application.routes.draw do
   resources :aspect_memberships, :only   => [:destroy, :create, :update]
   resources :post_visibilities,  :only   => [:update]
 
-  resources :people, :except => [:edit, :update] do
+  resources :people, :except => [:edit, :update, :show] do
     resources :status_messages
     resources :photos
     get  :contacts
-    post 'by_handle' => :retrieve_remote, :on => :collection, :as => 'person_by_handle'
+  end
+  
+  scope '/people/', :controller => :people do
+    post 'by_handle' => :retrieve_remote, :as => 'person_by_handle'
+    get ':pod/:username' => :show, :as => 'original_person',
+                                     :constraints => { :pod => /[^\/]+/, 
+                                                       :username => /[^\/]+/ }
   end
 
 

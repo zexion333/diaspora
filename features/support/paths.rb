@@ -18,13 +18,12 @@ module NavigationHelpers
       when /^my edit profile page$/
         edit_profile_path
       when /^my profile page$/
-        person_path(@me.person)
+        original_person_path(:username => @me.person.username, :pod => @me.person.pod)
       when /^my acceptance form page$/
         accept_user_invitation_path(:invitation_token => @me.invitation_token)
-      when /^the requestors profile$/
-        person_path(Request.where(:recipient_id => @me.person.id).first.sender)
       when /^"([^\"]*)"'s page$/
-        person_path(User.find_by_email($1).person)
+        person = User.find_by_email($1).person
+        original_person_path(:username => person.username, :pod => person.pod)
       when /^my account settings page$/
         edit_user_path
       when /^the photo page for "([^\"]*)"'s post "([^\"]*)"$/

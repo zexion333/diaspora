@@ -72,9 +72,7 @@ module ApplicationHelper
     if opts[:to] == :photos
       link_to person_image_tag(person, opts[:size]), person_photos_path(person)
     else
-      "<a href='/people/#{person.id}'>
-  #{person_image_tag(person)}
-</a>".html_safe
+      link_to person_image_tag(person, opts[:size]), person_path(person)
     end
   end
 
@@ -104,5 +102,27 @@ module ApplicationHelper
 
   def rtl?
     @rtl ||= RTL_LANGUAGES.include? I18n.locale
+  end
+
+  def person_path(obj, opts={})
+    if obj.is_a?(Person)
+      return original_person_path(opts.merge(:username => obj.username, :pod => obj.pod))
+    end
+    
+    if opts.empty? and obj.is_a?(Hash)
+      id = obj.delete(:id)
+    else
+      id = opts.delete(:id)
+    end
+    
+    if id
+      return person_path(Person.where(:id => id))
+    end
+    
+    if opts.empty?
+      orgiginal_person_path(opts)
+    else
+      original_person_path(obj, opts)
+    end
   end
 end

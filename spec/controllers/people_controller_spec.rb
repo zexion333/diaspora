@@ -86,13 +86,8 @@ describe PeopleController do
   end
 
   describe '#show' do
-    it "redirects to #index if the id is invalid" do
-      get :show, :id => 'delicious'
-      response.should redirect_to people_path
-    end
-
     it "redirects to #index if no person is found" do
-      get :show, :id => 3920397846
+      get :show, :username => 'not', :pod => 'there'
       response.should redirect_to people_path
     end
 
@@ -101,24 +96,24 @@ describe PeopleController do
       profile = user2.profile
       profile.first_name = "<script> alert('xss attack');</script>"
       profile.save
-      get :show, :id => user2.person.id
+      get :show, :username => user2.person.username, :pod => user2.person.pod
       response.should be_success
       response.body.match(profile.first_name).should be_false
     end
 
     context "when the person is the current user" do
       it "succeeds" do
-        get :show, :id => @user.person.to_param
+        get :show, :username => @user.person.username, :pod => @user.person.pod
         response.should be_success
       end
 
       it 'succeeds on the mobile site' do
-        get :show, :id => @user.person.to_param, :format => :mobile
+        get :show, :username => @user.person.username, :pod => @user.person.pod, :format => :mobile
         response.should be_success
       end
 
       it "assigns the right person" do
-        get :show, :id => @user.person.to_param
+        get :show, :username => @user.person.username, :pod => @user.person.pod
         assigns(:person).should == @user.person
       end
 
@@ -128,14 +123,14 @@ describe PeopleController do
         @user.post(:status_message, :text => "to all aspects", :to => 'all')
         @user.post(:status_message, :text => "public", :to => 'all', :public => true)
         @user.reload.posts.length.should == 3
-        get :show, :id => @user.person.to_param
+        get :show, :username => @user.person.username, :pod => @user.person.pod
         assigns(:posts).models.should =~ @user.posts
       end
 
       it "renders the comments on the user's posts" do
         message = @user.post :status_message, :text => 'test more', :to => @aspect.id
         @user.comment 'I mean it', :on => message
-        get :show, :id => @user.person.id
+        get :show, :username => @user.person.username, :pod => @user.person.pod
         response.should be_success
       end
     end
@@ -147,12 +142,12 @@ describe PeopleController do
       end
 
       it "succeeds" do
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         response.status.should == 200
       end
 
       it 'succeeds on the mobile site' do
-        get :show, :id => @person.id, :format => :mobile
+        get :show, :username => @person.username, :pod => @person.pod, :format => :mobile
         response.should be_success
       end
 
@@ -168,12 +163,12 @@ describe PeopleController do
         end
 
         it "assigns only public posts" do
-          get :show, :id => @person.id
+          get :show, :username => @person.username, :pod => @person.pod
           assigns[:posts].models.should =~ @public_posts
         end
 
         it 'is sorted by created_at desc' do
-          get :show, :id => @person.id
+          get :show, :username => @person.username, :pod => @person.pod
           assigns[:posts].models.should == @public_posts.sort_by{|p| p.created_at}.reverse
         end
       end
@@ -181,7 +176,7 @@ describe PeopleController do
       it 'throws 404 if the person is remote' do
         p = Factory(:person)
 
-        get :show, :id => p.id
+        get :show, :username => p.username, :pod => p.pod
         response.status.should == 404
       end
     end
@@ -192,12 +187,12 @@ describe PeopleController do
       end
 
       it "succeeds" do
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         response.should be_success
       end
 
       it 'succeeds on the mobile site' do
-        get :show, :id => @person.id, :format => :mobile
+        get :show, :username => @person.username, :pod => @person.pod, :format => :mobile
         response.should be_success
       end
 
@@ -210,12 +205,12 @@ describe PeopleController do
         posts_user_can_see << bob.post(:status_message, :text => "public", :to => 'all', :public => true)
         bob.reload.posts.length.should == 4
 
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         assigns(:posts).models.should =~ posts_user_can_see
       end
 
       it 'sets @commenting_disabled to true' do
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         assigns(:commenting_disabled).should == false
       end
     end
@@ -226,12 +221,12 @@ describe PeopleController do
       end
 
       it "succeeds" do
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         response.should be_success
       end
 
       it 'succeeds on the mobile site' do
-        get :show, :id => @person.id, :format => :mobile
+        get :show, :username => @person.username, :pod => @person.pod, :format => :mobile
         response.should be_success
       end
 
@@ -242,12 +237,12 @@ describe PeopleController do
         public_post = eve.post(:status_message, :text => "public", :to => 'all', :public => true)
         eve.reload.posts.length.should == 3
 
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         assigns[:posts].models.should =~ [public_post]
       end
 
       it 'sets @commenting_disabled to true' do
-        get :show, :id => @person.id
+        get :show, :username => @person.username, :pod => @person.pod
         assigns(:commenting_disabled).should == true
       end
     end

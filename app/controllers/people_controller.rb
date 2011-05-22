@@ -52,7 +52,10 @@ class PeopleController < ApplicationController
   end
 
   def show
-    @person = Person.where(:id => params[:id]).first
+    if params[:username].present? and params[:pod].present?
+      @person = Person.where(:diaspora_handle => "#{params[:username]}@#{params[:pod]}").first
+    end
+
     if @person && @person.remote? && !user_signed_in?
       render :file => "#{Rails.root}/public/404.html", :layout => false, :status => 404
       return
