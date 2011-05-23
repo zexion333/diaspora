@@ -94,7 +94,7 @@ class PhotosController < ApplicationController
 
   def make_profile_photo
     author_id = current_user.person.id
-    @photo = Photo.where(:id => params[:photo_id], :author_id => author_id).first
+    @photo = Photo.where(:guid => params[:photo_id], :author_id => author_id).first
 
     if @photo
       profile_hash = {:image_url        => @photo.url(:thumb_large),
@@ -119,7 +119,7 @@ class PhotosController < ApplicationController
   end
 
   def destroy
-    photo = current_user.posts.where(:id => params[:id]).first
+    photo = current_user.posts.where(:guid => params[:id]).first
 
     if photo
       current_user.retract(photo)
@@ -141,7 +141,7 @@ class PhotosController < ApplicationController
   end
 
   def show
-    @photo = current_user.find_visible_post_by_id(params[:id], :type => 'Photo')
+    @photo = current_user.find_visible_post_by_guid(params[:id], :type => 'Photo')
     if @photo
       @parent = StatusMessage.where(:id => @photo.status_message_id).includes(:photos).first if @photo.status_message_id
 
@@ -176,7 +176,7 @@ class PhotosController < ApplicationController
   end
 
   def edit
-    if @photo = current_user.posts.where(:id => params[:id]).first
+    if @photo = current_user.posts.where(:guid => params[:id]).first
       respond_with @photo
     else
       redirect_to original_person_photos_path(:username => current_user.person.username,
@@ -185,7 +185,7 @@ class PhotosController < ApplicationController
   end
 
   def update
-    photo = current_user.posts.where(:id => params[:id]).first
+    photo = current_user.posts.where(:guid => params[:id]).first
     if photo
       if current_user.update_post( photo, params[:photo] )
         flash.now[:notice] = I18n.t 'photos.update.notice'

@@ -181,7 +181,7 @@ describe Notifier do
       end
 
       it 'has the post link in the body' do
-        comment_mail.body.encoded.include?("#{comment.post.id.to_s}").should be true
+        comment_mail.body.encoded.include?("#{comment.post.guid}").should be true
       end
 
     end
@@ -202,7 +202,7 @@ describe Notifier do
       end
 
       it 'has the post link in the body' do
-        comment_mail.body.encoded.include?("#{comment.post.id.to_s}").should be true
+        comment_mail.body.encoded.include?("#{comment.post.guid}").should be true
       end
 
     end

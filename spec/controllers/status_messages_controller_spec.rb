@@ -49,7 +49,7 @@ describe StatusMessagesController do
     end
 
     it 'succeeds' do
-      get :show, "id" => @message.id.to_s
+      get :show, :id => @message.guid
       response.should be_success
     end
 
@@ -58,7 +58,7 @@ describe StatusMessagesController do
       bob.comment("here you go", :on => @message)
       note = Notification.where(:recipient_id => alice.id, :target_id => @message.id).first
       lambda{
-        get :show, :id => @message.id
+        get :show, :id => @message.guid
         note.reload
       }.should change(note, :unread).from(true).to(false)
     end
@@ -177,13 +177,13 @@ describe StatusMessagesController do
     end
 
     it 'let a user delete his message' do
-      delete :destroy, :format => :js, :id => @message.id
+      delete :destroy, :format => :js, :id => @message.guid
       StatusMessage.find_by_id(@message.id).should be_nil
     end
 
     it 'sends a retraction on delete' do
       alice.should_receive(:retract).with(@message)
-      delete :destroy, :format => :js, :id => @message.id
+      delete :destroy, :format => :js, :id => @message.guid
     end
 
     it 'will not let you destroy posts visible to you' do

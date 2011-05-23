@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   skip_before_filter :set_grammatical_gender
 
   def show
-    @post = Post.where(:id => params[:id], :public => true).includes(:author, :comments => :author).first
+    @post = Post.where(:guid => params[:id], :public => true).includes(:author, :comments => :author).first
 
     if @post
       @landing_page = true

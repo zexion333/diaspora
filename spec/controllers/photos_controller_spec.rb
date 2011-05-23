@@ -51,7 +51,7 @@ describe PhotosController do
   describe '#show' do
     context "user's own photo" do
       before do
-        get :show, :id => @alices_photo.id
+        get :show, :id => @alices_photo.guid
       end
 
       it "succeeds" do
@@ -66,7 +66,7 @@ describe PhotosController do
 
     context "private photo user can see" do
       before do
-        get :show, :id => @bobs_photo.id
+        get :show, :id => @bobs_photo.guid
       end
 
       it "succeeds" do
@@ -118,12 +118,12 @@ describe PhotosController do
 
   describe '#edit' do
     it "succeeds when user owns the photo" do
-      get :edit, :id => @alices_photo.id
+      get :edit, :id => @alices_photo.guid
       response.should be_success
     end
 
     it "redirects when the user does not own the photo" do
-      get :edit, :id => @bobs_photo.id
+      get :edit, :id => @bobs_photo.guid
       response.should redirect_to(:action => :index,
                                   :username => alice.person.username,
                                   :pod => alice.person.pod)
@@ -133,30 +133,30 @@ describe PhotosController do
 
   describe '#destroy' do
     it 'let a user delete his message' do
-      delete :destroy, :id => @alices_photo.id
+      delete :destroy, :id => @alices_photo.guid
       Photo.find_by_id(@alices_photo.id).should be_nil
     end
 
     it 'sends a retraction on delete' do
       alice.should_receive(:retract).with(@alices_photo)
-      delete :destroy, :id => @alices_photo.id
+      delete :destroy, :id => @alices_photo.guid
     end
 
     it 'will not let you destroy posts visible to you' do
-      delete :destroy, :id => @bobs_photo.id
+      delete :destroy, :id => @bobs_photo.guid
       Photo.find_by_id(@bobs_photo.id).should be_true
     end
 
     it 'will not let you destory posts you do not own' do
       eves_photo = eve.post(:photo, :user_file => uploaded_photo, :to => eve.aspects.first.id, :public => true)
-      delete :destroy, :id => eves_photo.id
+      delete :destroy, :id => eves_photo.guid
       Photo.find_by_id(eves_photo.id).should be_true
     end
   end
 
   describe "#update" do
     it "updates the caption of a photo" do
-      put :update, :id => @alices_photo.id, :photo => { :text => "now with lasers!" }
+      put :update, :id => @alices_photo.guid, :photo => { :text => "now with lasers!" }
       @alices_photo.reload.text.should == "now with lasers!"
     end
 
@@ -178,7 +178,7 @@ describe PhotosController do
 
   describe "#make_profile_photo" do
     it 'should return a 201 on a js success' do
-      get :make_profile_photo, :photo_id => @alices_photo.id, :format => 'js'
+      get :make_profile_photo, :photo_id => @alices_photo.guid, :format => 'js'
       response.code.should == "201"
     end
 

@@ -60,6 +60,10 @@ class Post < ActiveRecord::Base
     }
   end
 
+  def to_param
+    self.guid
+  end
+
   def mutable?
     false
   end

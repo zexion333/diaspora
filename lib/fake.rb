@@ -39,6 +39,10 @@ class PostsFake
     def id
       @model.id
     end
+    
+    def to_param
+      @model.guid
+    end
 
     def to_s
       @model.id.to_s

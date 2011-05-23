@@ -11,6 +11,12 @@ module Diaspora
         post ||= Post.where(:id => id, :author_id => self.person.id).where(opts).first
         post ||= Post.where(:id => id, :public => true).where(opts).first
       end
+      
+      def find_visible_post_by_guid( guid, opts={} )
+        post = Post.where(:guid => guid).joins(:contacts).where(:contacts => {:user_id => self.id}).where(opts).first
+        post ||= Post.where(:guid => guid, :author_id => self.person.id).where(opts).first
+        post ||= Post.where(:guid => guid, :public => true).where(opts).first
+      end
 
       def visible_posts(opts = {})
         opts = opts.dup
