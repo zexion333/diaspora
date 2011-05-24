@@ -30,7 +30,7 @@ JSON
     before do
       @photo = Factory(:activity_streams_photo)
       xml = @photo.to_diaspora_xml.to_s
-      @marshalled = Diaspora::Parser.from_xml(xml)
+      @marshalled = Diaspora::Parser.from_xml(xml).first
     end
     it 'Diaspora::Parser should pick the right class' do
       @marshalled.class.should == ActivityStreams::Photo

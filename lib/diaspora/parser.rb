@@ -8,7 +8,7 @@ module Diaspora
       doc = Nokogiri::XML(xml) { |cfg| cfg.noblanks }
       doc.xpath('/XML/post').children.inject([]) do |result, object|
         class_name = object.name.gsub('-', '/')
-        marshalled_object = class_name.camelize.constantize.from_xml body.to_s
+        marshalled_object = class_name.camelize.constantize.from_xml object.to_s
         result << marshalled_object
       end
     end
