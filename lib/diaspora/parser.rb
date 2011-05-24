@@ -7,7 +7,7 @@ module Diaspora
     def self.from_xml(xml)
       doc = Nokogiri::XML(xml) { |cfg| cfg.noblanks }
       doc.xpath('/XML/post').children.inject([]) do |result, object|
-        class_name = body.name.gsub('-', '/')
+        class_name = object.name.gsub('-', '/')
         marshalled_object = class_name.camelize.constantize.from_xml body.to_s
         result << marshalled_object
       end

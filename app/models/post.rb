@@ -84,30 +84,42 @@ class Post < ActiveRecord::Base
 
     local_post = Post.where(:guid => self.guid).first
     if local_post && local_post.author_id == self.author_id
-      known_post = user.visible_posts.where(:guid => self.guid).first
-      if known_post
-        if known_post.mutable?
-          known_post.update_attributes(self.attributes)
-        else
-          Rails.logger.info("event=receive payload_type=#{self.class} update=true status=abort sender=#{self.diaspora_handle} reason=immutable existing_post=#{known_post.id}")
-        end
-      else
-        user.contact_for(person).receive_post(local_post)
-        user.notify_if_mentioned(local_post)
-        Rails.logger.info("event=receive payload_type=#{self.class} update=true status=complete sender=#{self.diaspora_handle} existing_post=#{local_post.id}")
-        return local_post
-      end
+      receive_existing_post(user, person, local_post)
     elsif !local_post
-      if self.save
-        user.contact_for(person).receive_post(self) unless self.public?
-        user.notify_if_mentioned(self)
-        Rails.logger.info("event=receive payload_type=#{self.class} update=false status=complete sender=#{self.diaspora_handle}")
-        return self
-      else
-        Rails.logger.info("event=receive payload_type=#{self.class} update=false status=abort sender=#{self.diaspora_handle} reason=#{self.errors.full_messages}")
-      end
+      receive_new_post(user, person)
     else
       Rails.logger.info("event=receive payload_type=#{self.class} update=true status=abort sender=#{self.diaspora_handle} reason='update not from post owner' existing_post=#{self.id}")
+    end
+  end
+
+  def receive_existing_post(user, person, local_post)
+    known_post = user.visible_posts.where(:guid => self.guid).first
+    if known_post
+      if known_post.mutable?
+        known_post.update_attributes(self.attributes)
+      else
+        Rails.logger.info("event=receive payload_type=#{self.class} update=true status=abort sender=#{self.diaspora_handle} reason=immutable existing_post=#{known_post.id}")
+      end
+    else
+      local_post.receive_for_contact(user, person)
+      Rails.logger.info("event=receive payload_type=#{self.class} update=true status=complete sender=#{self.diaspora_handle} existing_post=#{local_post.id}")
+      return local_post
+    end
+  end
+
+  def receive_new_post(user, person)
+    if self.save
+      receive_for_contact(user, person)
+      Rails.logger.info("event=receive payload_type=#{self.class} update=false status=complete sender=#{self.diaspora_handle}")
+      return self
+    else
+      Rails.logger.info("event=receive payload_type=#{self.class} update=false status=abort sender=#{self.diaspora_handle} reason=#{self.errors.full_messages}")
+    end
+  end
+
+  def receive_for_contact(user, person)
+    if contact = user.contact_for(person)
+      contact.receive_post(self)
     end
   end
 

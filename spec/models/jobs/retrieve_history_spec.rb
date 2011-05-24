@@ -44,7 +44,7 @@ describe Job::RetrieveHistory do
       SocketsController.should_receive(:new).exactly(3).times.and_return(mock)
       Job::RetrieveHistory.perform(@user.id, @person.id)
     end
- 
+
     it "updates the person's fetched_at time" do
       @time = Time.now
       Time.stub(:now).and_return(@time)
@@ -88,7 +88,7 @@ describe Job::RetrieveHistory do
       Job::RetrieveHistory.should_receive(:get_data)
       Job::RetrieveHistory.perform(@user.id, @person2.id)
     end
- 
+
     it "updates the contact's fetched_at time" do
       Job::RetrieveHistory.stub(:get_data).and_yield
 
@@ -105,24 +105,17 @@ describe Job::RetrieveHistory do
   end
 
   describe '.get_data' do
-
-    it 'does not yield on failure' do
-
-      stub_request(:get, "#{@person.url}api/v0/statuses/user_timeline?format=xml&screen_name=#{@person.diaspora_handle}").
+    it 'yield on failure' do
+      route = "#{@person.url}api/v0/statuses/user_timeline?format=xml&screen_name=#{@person.diaspora_handle}"
+      stub_request(:get, route).
         with( :headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate'}).
         to_return(:status => 500, :body => @public_xml, :headers => {})
-      
-      @time = Time.now
-      Time.stub(:now).and_return(@time)
+
       lambda{
-        Job::RetrieveHistory.perform(@user.id, @person.id)
-      }.should_not change{
-        time = @person.reload.fetched_at
-        time = time.to_i if time
-        time
-      }
-
+        Job::RetrieveHistory.get_data(route, {}, @user, @person) do
+          raise "this should not be reached"
+        end
+      }.should_not raise_error /this should not be reached/
     end
-
   end
 end

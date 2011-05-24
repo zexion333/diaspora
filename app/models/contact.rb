@@ -57,6 +57,7 @@ class Contact < ActiveRecord::Base
 
   def receive_post(post)
     PostVisibility.create!(:post_id => post.id, :contact_id => self.id)
+    self.user.notify_if_mentioned(post)
     post.socket_to_user(self.user, :aspect_ids => self.aspect_ids) if post.respond_to? :socket_to_user
   end
 
@@ -104,7 +105,7 @@ class Contact < ActiveRecord::Base
         :host => URI.parse(sender.url).host,
         :port => URI.parse(sender.url).port.to_s,
         :time => time.to_i.to_s
-      )     
+      )
 
       client.refresh_token = refresh_token.token
 

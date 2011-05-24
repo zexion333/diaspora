@@ -16,7 +16,7 @@ module Job
       api_route = "#{person.url}api/v0/statuses/user_timeline"
       request_hash ={ :params => {:screen_name => person.diaspora_handle,
                                               :format => :xml}}
-      if contact 
+      if contact
         if contact.access_token.nil? || contact.access_token.expired?
           pp "Receiving Tokens for a contact from the job"
           contact.receive_tokens
@@ -39,19 +39,13 @@ module Job
     end
 
     def self.get_data(api_route, request_hash, user, person)
-      begin
-        RestClient.get(api_route, request_hash) do |body, req, res|
-          pp res.code
-          return unless res.code.to_i >= 200 && res.code.to_i < 400
-          pp body
-          [*Diaspora::Parser.from_xml(body)].map do |obj|
-            obj.receive(user, person)
-            obj.socket_to_user(user)
-          end
-          yield
+      RestClient.get(api_route, request_hash) do |body, req, res|
+        raise "Retreiving history failed with code: #{res.code}" unless res.code.to_i >= 200 && res.code.to_i < 400
+        Diaspora::Parser.from_xml(body).map do |obj|
+          obj.receive(user, person)
+          obj.socket_to_user(user)
         end
-      rescue
-        pp "there was an exception in getting the data: " + e.inspect
+        yield
       end
     end
   end
