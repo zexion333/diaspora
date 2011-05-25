@@ -19,4 +19,12 @@ production:
 
 test:
   <<: *common
-  database: "diaspora_test"
+  database: diaspora_test
+
+integration_1:
+  <<: *common
+  database: diaspora_integration_1
+
+integration_2:
+  <<: *common
+  database: diaspora_integration_2
