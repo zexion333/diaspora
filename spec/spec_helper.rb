@@ -8,6 +8,7 @@ require 'webmock/rspec'
 require 'factory_girl'
 
 include WebMock::API
+WebMock::Config.instance.allow_localhost = true
 include HelperMethods
 
 # Force fixture rebuild

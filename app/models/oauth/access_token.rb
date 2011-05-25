@@ -1,8 +1,6 @@
 class AccessToken < ActiveRecord::Base
-
-  require File.join(Rails.root, 'lib/oauth/oauth2_token')
-
   include Oauth2Token
+
   self.default_lifetime = 15.minutes
   belongs_to :refresh_token
 
@@ -19,7 +17,7 @@ class AccessToken < ActiveRecord::Base
     end
     bearer_token
   end
-  
+
   private
 
   def setup

@@ -34,6 +34,7 @@ namespace :integration do
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:run_specs => :start_servers) do |t|
     t.pattern = "./spec/multi_server/**/*_spec.rb"
+    t.filter_run :integration => true
   end
   def servers_active? ports
     begin
