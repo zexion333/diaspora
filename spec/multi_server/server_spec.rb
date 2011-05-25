@@ -2,23 +2,45 @@
 
 require 'spec_helper'
 describe Server do
-  describe '#initialize' do
-    it 'creates a new process' do
-      server = Server.new(:port => 4000)
-      server.find_old_processes.length.should == 1
-    end
-
-    it 'takes a port' do
-      server = Server.new(:port => 4123)
-      server.find_old_processes.first.should include("-p 4123")
+  before(:all) do
+    WebMock::Config.instance.allow_localhost = true
+  end
+  after(:all) do
+    WebMock::Config.instance.allow_localhost = false
+  end
+  describe '.all' do
+    it 'returns a server object for each server' do
+      integration_envs = ActiveRecord::Base.configurations.keys.select{ |k| k.include?("integration") }
+      integration_envs.count.should == Server.all.count
     end
   end
+  describe '#initialize' do
+    it 'takes an environment' do
+      server = Server.new("integration_1")
+      server.env.should == "integration_1"
+      server.port.should == ActiveRecord::Base.configurations["integration_1"]["app_server_port"]
+    end
+  end
+  describe "#running?" do
+    it "verifies that the server is running" do
+      Server.new("integration_1").running?.should be_true
+    end
+  end
+  describe '#db' do
+    it 'runs the given code in the context of that server' do
+      servers = Server.all
 
-  describe '#find_old_processes' do
-    it 'closes old processes' do
-      server = Server.new(:port => 4000)
-      server_2 = Server.new(:port => 4000)
-      server_2.find_old_processes.length.should == 1
+      test_user_count = User.count
+      servers.first.db do
+        User.count.should == 0
+        Factory :user
+        User.count.should == 1
+      end
+      User.count.should == test_user_count
+
+      servers.last.db do
+        User.count.should == 0
+      end
     end
   end
 end

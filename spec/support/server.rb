@@ -1,30 +1,31 @@
 #This class is for running servers in the background during integration testing.  This will not run on Windows.
 class Server
-  def initialize(opts)
-    @port = opts[:port] || 4000
-    @env = opts[:env] || "integration_1"
+  def self.all
+    ActiveRecord::Base.configurations.keys.select{
+      |k| k.include?("integration")
+    }.map{ |k| self.new(k) }
   end
 
-  def start
-    @pid = fork do
-      Rails.env = @env
-      Rack::Handler::Thin.run(Diaspora, :Port => @port)
+  attr_reader :port, :env
+  def initialize(env)
+    @config = ActiveRecord::Base.configurations[env]
+    @port = @config["app_server_port"]
+    @env = env
+  end
+
+  def running?
+    begin
+      RestClient.get("localhost:#{@port}/users/sign_in")
+      true
+    rescue Errno::ECONNREFUSED
+      false
     end
   end
 
-  def clear_old_processes
-    find_old_processes.each do |p|
-      `kill -9 #{p.split(" ").first}`
-    end
-  end
-
-  def close
-    Process.kill(9, @pid)
-  end
-
-  def find_old_processes
-    processes = `ps -ax -o pid,command | grep '#{@run_line}'`.split("\n").select do |p|
-      !p.include?("ps -ax")
-    end
+  def db
+    former_env = Rails.env
+    ActiveRecord::Base.establish_connection(env)
+    yield
+    ActiveRecord::Base.establish_connection(former_env)
   end
 end
