@@ -4,7 +4,8 @@ class ActivityStreams::NotesController < ApplicationController
 
   respond_to :json 
   def create
-    puts params.inspect
-    render :nothing =>true
+    @note current_user.build_post(:status_message, :text => params[:text], :to => current_user.aspects)
+    @note.save
+    render :nothing =>true, :code => 200
   end
 end
