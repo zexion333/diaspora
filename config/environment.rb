@@ -36,7 +36,7 @@ module Devise
     class TokenAuthenticatable < Authenticatable
       private
       def valid_request?
-        params[:controller] == "activity_streams/photos" && params[:action] == "create"
+        ['activity_streams/photos','activity_streams/notes'].include?(params[:controller]) && params[:action] == "create"
       end
     end
   end

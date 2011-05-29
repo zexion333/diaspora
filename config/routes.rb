@@ -85,6 +85,17 @@ Diaspora::Application.routes.draw do
     get 'invitations/email' => 'invitations#email', :as => 'invite_email'
   end
 
+
+  # ActivityStreams routes
+  scope "/activity_streams", :module => "activity_streams", :as => "activity_streams" do
+    resources :photos, :controller => "photos", :only => [:create, :show, :destroy]
+    resources :notes, :controller => "notes", :only => [:create]
+  end
+
+
+  #Temporary token_authenticable route
+  resource :token, :only => [:show, :create]
+
   get 'login' => redirect('/users/sign_in')
 
   scope 'admins', :controller => :admins do
