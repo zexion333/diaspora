@@ -288,7 +288,11 @@ ActiveRecord::Schema.define(:version => 20110816061820) do
     t.string   "provider_display_name"
     t.string   "actor_url"
     t.integer  "objectId"
+<<<<<<< HEAD
     t.string   "root_guid",             :limit => 30
+=======
+    t.integer  "root_id"
+>>>>>>> public by default
     t.string   "status_message_guid"
     t.integer  "likes_count",                         :default => 0
   end
