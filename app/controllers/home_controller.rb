@@ -3,10 +3,11 @@
 #   the COPYRIGHT file.
 
 class HomeController < ApplicationController
-
   def show
     if current_user
+      return if is_mobile_device?
       redirect_to :controller => 'aspects', :action => 'index'
+
     elsif is_mobile_device?
       redirect_to user_session_path
     else

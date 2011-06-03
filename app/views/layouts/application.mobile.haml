@@ -7,15 +7,14 @@
   %head
     %title
       DIASPORA*
-
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
+    %meta{:name => "viewport", :content=>"width=device-width, initial-scale=1.0, maximum-scale=1.0"}
 
     = include_javascripts :mobile
     -if current_user
       :javascript
         Diaspora.widgets.i18n.loadLocale(#{get_javascript_strings_for(current_user.language).to_json}, "#{current_user.language}");
 
-    = stylesheet_link_tag 'vendor/jquery.mobile-1.0a4.min', 'mobile'
     = csrf_meta_tag
     
     - if rtl?
@@ -46,54 +45,6 @@
         piwikTracker.enableLinkTracking();
         } catch( err ) {}
 
-
   %body
-    #content{:data => {:role => 'page', :theme => 'c'}}
-      #header
-        - if current_user
-          .right
-            = link_to(image_tag('icons/list_white.png'), '#menu', :id => "menu_button")
-            = link_to(image_tag('icons/search_white.png'), people_path)
-        = link_to(image_tag('white@2x.png', :height => 22, :width => 136, :id => 'header_title'), aspects_path)
-
-      = yield
-
-      = render :partial =>'shared/footer' if user_signed_in?
-
-    -if current_user
-      #menu{:data => {:role => 'page', :theme => 'c'}}
-        #header
-          .right
-            = link_to(image_tag('icons/search_white.png'), people_path)
-          = link_to(image_tag('white.png'), aspects_path)
-
-        #content{:data => {:role => 'content'}}
-
-          %h2
-            = current_user.name
-
-          %ul{:data => {:role => 'listview', :inset => 'true'}}
-            %li
-              = link_to t('notifications.index.notifications'), notifications_path
-              .ui-li-count
-                = @notification_count
-            %li
-              = link_to t('conversations.index.message_inbox'), conversations_path
-              .ui-li-count
-                = @unread_message_count
-                
-          %h4
-            = t('.your_aspects')
-
-          %ul{:data => {:role => 'listview', :inset => 'true'}}
-            %li
-              = link_to t('all_aspects'), aspects_path
-            - for aspect in all_aspects
-              %li
-                = link_to aspect, aspects_path('a_ids[]' => aspect.id)
-
-
-        = render :partial =>'shared/footer'
-
-  = yield :subpages
+    = yield
 

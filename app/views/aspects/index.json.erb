@@ -1,0 +1,21 @@
+[
+<% for post in @posts do %>
+  {
+    "author": {
+      "name": "<%= escape_javascript(post.author.name) %>",
+      "avatar": "<%= post.author.profile.image_url %>"
+    },
+    "text": "<%= escape_javascript(post.text) %>",
+    <% if post.photos.size > 0 %>
+      "photos": <% post.photos.map{|p| p.image_url}.to_json %>,
+    <% else %>
+      "photos": [],
+    <% end %>
+    "commentCount": <%= post.comments.size %>,
+    "date": "<%= post.created_at %>"
+  }
+  <% unless @posts.last == post %>
+    <%="," %>
+  <% end %>
+<% end %>
+]
