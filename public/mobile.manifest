@@ -1,0 +1,11 @@
+CACHE MANIFEST
+
+CACHE:
+/javascripts/vendor/Mustache.js
+/javascripts/vendor/underscore.js
+/javascripts/vendor/backbone-min.js
+/javascript/mobile/*
+/javascripts/diaspora.js
+/javascripts/widgets/i18n.js
+/images/user/default.png
+

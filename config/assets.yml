@@ -95,4 +95,7 @@ stylesheets:
     - public/stylesheets/vendor/autoSuggest.css
   rtl:
     - public/stylesheets/rtl.css
+
+  mobile:
+    - public/stylesheets/mobile.css
  

@@ -1,20 +1,20 @@
 var TemplateHelper = {
+  cache: {},
+  callbacks: {},
   path: "/javascripts/mobile/templates/",
   extension: ".mustache",
   get: function(templateName, callback) {
-    var template = $("#templates_" + templateName);
-    if(template.length) {
-      return callback(template.text());
+    this.callbacks[templateName] = this.callbacks[templateName] || [];
+
+    if(!TemplateHelper.callbacks[templateName].length) {
+      $.get(this.path + templateName + this.extension, function(data) {
+        TemplateHelper.cache[templateName] = data;
+        $.each(TemplateHelper.callbacks[templateName], function(index, callback) {
+          callback(data);
+        });
+      });
     }
 
-    $.get(this.path + templateName + this.extension, function(data) {
-      $("<script/>", {
-        id: "templates_" + templateName,
-        type: "text/html"
-      }).text(data).appendTo("head");
-
-      callback(data);
-    });
+    this.callbacks[templateName].push(callback);
   }
-
 };

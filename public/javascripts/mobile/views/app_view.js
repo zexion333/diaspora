@@ -12,10 +12,10 @@ var AppView = Backbone.View.extend({
   render: function() {
     Stream.fetch({
       success: function() {
-        TemplateHelper.get("stream_element", function(template) { 
-          _.each(Stream.models, function(model) {
-            $($.mustache(template, model.toJSON())).appendTo(document.body);
-          });
+        _.each(Stream.models, function(model){
+          new StreamElement({
+            model: model
+          }).render();
         });
       }
     });

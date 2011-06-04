@@ -1,8 +1,11 @@
 {{#author}}
-  <img src='{{avatar}}'/>
-  <h1>{{name}}</h1>
+  <img src='{{avatar}}' class='avatar'/>
 {{/author}}
-<div>
+<div class='content'>
+  {{#author}}
+    <div class="author-name">{{name}}</div>
+  {{/author}}
   {{{text}}}
+  <br/>
+  {{commentCount}}
 </div>
-<b>{{commentCount}}</b>

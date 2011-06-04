@@ -9,6 +9,8 @@
       DIASPORA*
     %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
     %meta{:name => "viewport", :content=>"width=device-width, initial-scale=1.0, maximum-scale=1.0"}
+    %meta{:name=>"apple-touch-fullscreen", :content=>"yes"}
+    %meta{:name=>"apple-mobile-web-app-capable", :content=>"yes"}
 
     = include_javascripts :mobile
     -if current_user
@@ -16,6 +18,8 @@
         Diaspora.widgets.i18n.loadLocale(#{get_javascript_strings_for(current_user.language).to_json}, "#{current_user.language}");
 
     = csrf_meta_tag
+
+    = include_stylesheets :mobile, :media => 'all'
     
     - if rtl?
       = include_stylesheets :rtl, :media => 'all'
@@ -46,5 +50,7 @@
         } catch( err ) {}
 
   %body
+    %header
+      DIASPORA*
     = yield
 
