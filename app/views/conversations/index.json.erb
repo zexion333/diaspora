@@ -1,17 +1,17 @@
 [
-<% for conversation in @conversations do %>
+<% for convo in @conversations %>
   {
+    "id" : <%= convo.id %>,
     "author": {
-      "name": "<%= escape_javascript(conversation.author.name) %>",
-      "avatar": "<%= conversation.author.profile.image_url %>"
+      "name": "<%= escape_javascript(convo.author.name) %>",
+      "avatar": "<%= convo.author.profile.image_url %>"
     },
-    "subject": "<%= escape_javascript(conversation.text) %>",
-    "threadCount": <%= conversations.messages.size %>,
-    "date": "<%= conversation.updated_at %>"
+    "gist": "<%= escape_javascript(convo.messages.last.text[0..80]+"...") %>",
+    "messageCount": <%= convo.messages.size %>,
+    "date": "<%= convo.created_at %>"
   }
-  <% unless @conversations.last == conversation %>
+  <% unless @conversations.last == convo %>
     <%="," %>
   <% end %>
 <% end %>
 ]
-

@@ -64,6 +64,10 @@ header {
       position: relative;
       top: 7px;
     }
+
+    &.dimmed{
+      @include opacity(0.4);
+    }
   }
 }
 
@@ -78,12 +82,14 @@ header {
 }
 
 .stream-element,
+.inbox-element,
 #post-show{
   padding: 10px;
   min-height: 40px;
   color: #333;
 }
 
+.inbox-element,
 .stream-element{
   border-bottom: 1px solid #eee;
 
@@ -149,6 +155,7 @@ header {
 
 .author-name{
   font-weight: 700;
+  font-size: 14px;
 }
 
 .comments-counter{

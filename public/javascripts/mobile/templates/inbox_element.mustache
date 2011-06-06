@@ -1,0 +1,20 @@
+{{#author}}
+  <img src='{{avatar}}' class='avatar'/>
+{{/author}}
+<div class='content'>
+  <div class='stream-date'>
+    {{date}}
+  </div>
+  {{#author}}
+    <div class="author-name">{{name}}</div>
+  {{/author}}
+  {{{gist}}}
+
+  <br/>
+  {{#commentCount}}
+    <div class="comments-counter">
+      <img src='/images/icons/comment.gif' height=14 width=14/>
+      {{commentCount}}
+    </div>
+  {{/commentCount}}
+</div>

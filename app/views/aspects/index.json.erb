@@ -8,7 +8,7 @@
     },
     "text": "<%= escape_javascript(post.text) %>",
     <% if post.photos.size > 0 %>
-      "photos": <% post.photos.map{|p| p.image_url}.to_json %>,
+      "photos": [<%= post.photos.map{|p| p.url} %>],
     <% else %>
       "photos": [],
     <% end %>
