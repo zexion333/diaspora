@@ -8,8 +8,32 @@ body,html{
   margin: 0;
   padding: 0;
   font-family: 'helvetica neue', helvetica, arial, sans;
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 17px;
+  max-width: 100%;
+}
+
+input,
+textarea{
+  font-size: 13px;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+input[type=submit]{
+  @include border-radius(6px);
+  font-weight: bold;
+  background-color: #777;
+  color: #fff;
+}
+
+textarea{
+  width: 90%;
+  line-height: 19px;
+}
+
+#compose-area{
+  padding: 10px;
 }
 
 header {
@@ -125,6 +149,28 @@ header {
 
 .author-name{
   font-weight: 700;
+}
+
+.comments-counter{
+  @include border-radius(3px);
+
+  font-weight: 700;
+  color: #777;
+  padding: 2px 6px;
+  padding-top: 0px;
+  background-color: #eee;
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 12px;
+
+  .dull{
+    color: #ccc;
+  }
+
+  img{
+    position: relative;
+    top: 3px;
+  }
 }
 
 /* spinner loading animation on asterisk */

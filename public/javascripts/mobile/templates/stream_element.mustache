@@ -9,6 +9,12 @@
     <div class="author-name">{{name}}</div>
   {{/author}}
   {{{text}}}
+
   <br/>
-  {{commentCount}}
+  {{#commentCount}}
+    <div class="comments-counter">
+      <img src='/images/icons/comment.gif' height=14 width=14/>
+      {{commentCount}}
+    </div>
+  {{/commentCount}}
 </div>
