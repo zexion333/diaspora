@@ -5,6 +5,16 @@ $background: rgb(252, 252, 252);
 $speed: 0.1s;
 $easing: linear;
 
+a{
+  color: $blue;
+  text-decoration: none;
+  &:hover{
+    color: $blue;
+    text-decoration: underline;
+  }
+}
+
+
 @mixin mobile-box {
   margin: 10px;
   padding: 0 15px;

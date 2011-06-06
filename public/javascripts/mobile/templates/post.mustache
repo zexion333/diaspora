@@ -1,15 +1,20 @@
 <div id="post-show">
-  <div id="post-content">
+  <div id="post-author-info">
     {{#author}}
       <img src='{{avatar}}' class='avatar'/>
-      <div class="author-name larger">{{name}}</div>
+      <div class="content">
+        <span class="author-name larger">{{name}}</div>
+      </div>
     {{/author}}
 
-    {{{text}}}
+    <div id="post-content">
+      {{{text}}}
+    </div>
 
     <div class='stream-date'>
       {{date}}
     </div>
+
   </div>
     
   <div id="comments">
