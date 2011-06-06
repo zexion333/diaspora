@@ -44,6 +44,7 @@ javascripts:
     - public/javascripts/login.js
   mobile:
     - public/javascripts/vendor/jquery152.min.js
+
     - public/javascripts/vendor/underscore.js
     - public/javascripts/vendor/backbone-min.js
 

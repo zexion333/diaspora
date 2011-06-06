@@ -1,15 +1,33 @@
-{{#author}}
-  <img src='{{avatar}}' class='avatar'/>
-{{/author}}
-<div class='content'>
-  <div class='stream-date'>
-    {{date}}
+<div id="post-show">
+  <div id="post-content">
+    {{#author}}
+      <img src='{{avatar}}' class='avatar'/>
+      <div class="author-name larger">{{name}}</div>
+    {{/author}}
+
+    {{{text}}}
+
+    <div class='stream-date'>
+      {{date}}
+    </div>
   </div>
-  {{#author}}
-    <div class="author-name">{{name}}</div>
-  {{/author}}
-  {{{text}}}
-  <h1>
-    some motherfucking comments
-  </h1>
+    
+  <div id="comments">
+    {{#comments}}
+      <div class="stream-element comment">
+        {{#author}}
+          <img src='{{avatar}}' class='avatar'/>
+        {{/author}}
+        <div class='content'>
+          <div class='stream-date'>
+            {{date}}
+          </div>
+          {{#author}}
+            <div class="author-name">{{name}}</div>
+          {{/author}}
+          {{{text}}}
+        </div>
+      </div>
+    {{/comments}}
+  </div>
 </div>

@@ -51,7 +51,7 @@
 
   %body
     %header
-      = image_tag('/images/asterisk_mobile_white.png', :height => 30, :width => 30)
+      = link_to(image_tag('/images/asterisk_mobile_white.png', :height => 30, :width => 30, :id => 'asterisk-logo'), "/#aspects")
 
     #content
       = yield

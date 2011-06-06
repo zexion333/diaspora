@@ -13,7 +13,12 @@ var App =  {
         }
       });
     }
-
+    var $asteriskLogo = $("#asterisk-logo");
+    $(document).ajaxStart(function() {
+      $asteriskLogo.addClass("rideSpinners");
+    }).ajaxSuccess(function() {
+      $asteriskLogo.removeClass("rideSpinners");
+    });
   },
   Collections: {},
   Controllers: {},

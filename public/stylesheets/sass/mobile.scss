@@ -8,20 +8,20 @@ body,html{
   margin: 0;
   padding: 0;
   font-family: 'helvetica neue', helvetica, arial, sans;
-  font-size: 15px;
-  line-height: 19px;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 header {
-  @include linear-gradient(#222, #000);
-  @include box-shadow(0, 2px, 1px, #666);
+  @include linear-gradient(#333, #000);
+  @include box-shadow(0, 1px, 2px, #444);
 
   position: fixed;
   width: 100%;
   z-index: 2;
 
-  padding: 6px 7px;
-  padding-bottom: 2px;
+  padding: 7px 10px;
+  padding-bottom: 4px;
   color: #fff;
   margin-bottom: 12px;
 
@@ -29,10 +29,18 @@ header {
   font-weight: 700;
 }
 
-
 #content {
-  position:relative;
+  position:absolute;
   top: 45px;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+}
+
+.content{
+  padding-left: 60px;
 }
 
 .stream-element{
@@ -42,18 +50,8 @@ header {
 
   color: #333;
   
-  .author-name{
-    font-weight: 700;
-  }
-
   .avatar{
-    height: 50px;
-    width: 50px;
     float: left;
-  }
-
-  .content{
-    padding-left: 60px;
   }
 
   .stream-date{
@@ -62,4 +60,60 @@ header {
     color: #888;
     top: -1px;
   }
+}
+
+#comments{
+  margin-top: 20px;
+}
+
+#post-content{
+  font-size: 21px;
+  line-height: 27px;
+  padding: 15px;
+
+  .avatar{
+    float: left;
+  }
+}
+
+.avatar.smaller{
+  height: 30px;
+  width: 30px;
+  float: left;
+}
+
+.comment {
+  background-color: #ddd;
+
+  .avatar{
+    height: 40px;
+    width: 40px;
+  }
+
+  .content{
+    padding-left: 50px;
+  }
+}
+
+.author-name{
+  font-weight: 700;
+}
+
+#post-show{
+  .author-name.larger{
+    font-size: 20px;
+  }
+}
+
+/* spinner loading animation on asterisk */
+@-webkit-keyframes rotate {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+
+.rideSpinners
+{
+  -webkit-animation-name: rotate; 
+  -webkit-animation-duration: 1s; 
+  -webkit-animation-iteration-count: infinite;
 }
