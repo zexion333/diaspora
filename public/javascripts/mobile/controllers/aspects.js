@@ -7,6 +7,9 @@ App.Controllers.Aspects = Backbone.Controller.extend({
     App.Collections.Stream.fetch({
       success: function() {
         App.Views.Stream.render();
+      }, 
+      error: function() {
+        console.log("err0r");
       }
     });
 

@@ -1,6 +1,7 @@
 [
 <% for post in @posts do %>
   {
+    "id" : <%= post.id %>,
     "author": {
       "name": "<%= escape_javascript(post.author.name) %>",
       "avatar": "<%= post.author.profile.image_url %>"

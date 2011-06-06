@@ -1,0 +1,35 @@
+{
+  "id" : <%= @status_message.id %>,
+  "author": {
+    "name": "<%= escape_javascript(@status_message.author.name) %>",
+    "avatar": "<%= @status_message.author.profile.image_url %>"
+  },
+  "text": "<%= escape_javascript(@status_message.text) %>",
+  <% if @status_message.photos.size > 0 %>
+    "photos": <% @status_message.photos.map{|p| p.image_url}.to_json %>,
+  <% else %>
+    "photos": [],
+  <% end %>
+  "commentCount": <%= @status_message.comments.size %>,
+  "date": "<%= @status_message.created_at %>",
+
+  <% if @status_message.comments.size > 0 %>
+    "comments": [
+      <% for comment in @status_message.comments do %>
+        {
+          "author" : {
+            "name": "<%= escape_javascript(comment.author.name) %>",
+            "avatar": "<%= comment.author.profile.image_url %>"
+          },
+          "text": "<%= escape_javascript(comment.text) %>",
+          "date": "<%= comment.created_at %>"
+        }
+        <% unless @status_message.comments.last == comment%>
+          <%="," %>
+        <% end %>
+      <% end %>
+      ]
+  <% else %>
+    "comments": []
+  <% end %>
+}

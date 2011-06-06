@@ -58,7 +58,6 @@ javascripts:
 
     - public/javascripts/diaspora.js
     - public/javascripts/widgets/i18n.js
-    - public/javascripts/mobile.js
   mailchimp:
     - public/javascripts/vendor/mailchimp/jquery.form.js
     - public/javascripts/vendor/mailchimp/jquery.validate.js

@@ -4,6 +4,7 @@ App.Views.Stream = new (Backbone.View.extend({
   className: "stream",
 
   render: function() {
+    $("#content").html("");
     _.each(App.Collections.Stream.models, function(model) {
       new App.Views.StreamElement({
         model: model
