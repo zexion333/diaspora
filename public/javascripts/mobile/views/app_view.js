@@ -1,4 +1,4 @@
-var AppView = Backbone.View.extend({
+App.Views.Index = Backbone.View.extend({
   template: $.mustache,
 
   el: $("#diasporamobile"),
@@ -6,19 +6,12 @@ var AppView = Backbone.View.extend({
   className: "stream-element",
 
   initialize: function() {
+  
     this.render();
   },
 
   render: function() {
-    Stream.fetch({
-      success: function() {
-        _.each(Stream.models, function(model){
-          new StreamElement({
-            model: model
-          }).render();
-        });
-      }
-    });
+    App.Collections.Stream.fetch();
     return this;
   }
 

@@ -1,9 +1,6 @@
-var Posts = Backbone.Collection.extend({
+App.Collections.Posts = Backbone.Collection.extend({
   url: "/aspects.json",
-  model: Post,
-
-  comparator: function(post) {
-    return post.get('date');
-  },
+  model: App.Models.Post
 }),
-Stream = new Posts();
+
+App.Collections.Stream = new App.Collections.Posts();

@@ -1,15 +1,15 @@
-var AspectsController = Backbone.Controller.extend({
+App.Controllers.Aspects = Backbone.Controller.extend({
   routes: {
     "aspects": "index"
   },
 
   index: function() {
-    var post = new Post({
-      author: "dan",
-      content: "foo",
-      date: new Date
+    App.Collections.Stream.fetch({
+      success: function() {
+        App.Views.Stream.render();
+      }
     });
 
-    console.log(post);
+    return this;
   }
 });

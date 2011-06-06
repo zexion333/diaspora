@@ -4,17 +4,24 @@
 
 @import "mixins";
 
-body{
+body,html{
   margin: 0;
   padding: 0;
-  font-family: helvetica, sans;
+  font-family: 'helvetica neue', helvetica, arial, sans;
+  font-size: 15px;
+  line-height: 19px;
 }
 
 header {
-  @include linear-gradient(#333, #000);
-  @include box-shadow(0, 1px, 2px, #888);
+  @include linear-gradient(#222, #000);
+  @include box-shadow(0, 2px, 1px, #666);
 
-  padding: 7px 5px;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+
+  padding: 6px 7px;
+  padding-bottom: 2px;
   color: #fff;
   margin-bottom: 12px;
 
@@ -22,10 +29,18 @@ header {
   font-weight: 700;
 }
 
+
+#content {
+  position:relative;
+  top: 45px;
+}
+
 .stream-element{
   padding: 10px;
   min-height: 50px;
   border-bottom: 1px solid #eee;
+
+  color: #333;
   
   .author-name{
     font-weight: 700;
@@ -39,5 +54,12 @@ header {
 
   .content{
     padding-left: 60px;
+  }
+
+  .stream-date{
+    float: right;
+    font-size: 10px;
+    color: #888;
+    top: -1px;
   }
 }

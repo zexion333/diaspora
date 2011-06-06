@@ -49,6 +49,7 @@ javascripts:
 
     - public/javascripts/vendor/Mustache.js
 
+    - public/javascripts/mobile/app.js
     - public/javascripts/mobile/helpers.js
     - public/javascripts/mobile/models/*
     - public/javascripts/mobile/collections/*

@@ -1,4 +1,2 @@
-var Post = Backbone.Model.extend({
-  intialize: function() {
-  }
+App.Models.Post = Backbone.Model.extend({
 });

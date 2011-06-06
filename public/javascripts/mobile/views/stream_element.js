@@ -1,23 +1,18 @@
-var StreamElement = Backbone.View.extend({
+App.Views.StreamElement = Backbone.View.extend({
   tagName: "div",
   className: "stream-element",
 
-  events: {
-    "click": "showStreamElement"
-  },
-
-  showStreamElement: function() {
-    alert("hi");
+  initialize: function(){
+    this.model.bind("change", this.render);
+    this.render();
   },
 
   render: function() {
-    var self = this;
-    TemplateHelper.get("stream_element", function(templateHtml) {
-      $(self.el).html(
-        $.mustache(templateHtml, self.model.toJSON())
-      ).appendTo("body");
-    });
-    
+    TemplateHelper.get("stream_element", $.proxy(function(templateHtml) {
+      $(this.el).html(
+        $.mustache(templateHtml, this.model.toJSON())
+      ).appendTo("#content");
+    }, this));
     return this;
   }
 

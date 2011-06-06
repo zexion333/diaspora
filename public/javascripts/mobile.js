@@ -1,5 +1,4 @@
 $(function() {
-  new AspectsController();
-  window.App = new AppView();
+  App.initialize();
   Backbone.history.start();
 });

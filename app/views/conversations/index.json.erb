@@ -1,0 +1,17 @@
+[
+<% for conversation in @conversations do %>
+  {
+    "author": {
+      "name": "<%= escape_javascript(conversation.author.name) %>",
+      "avatar": "<%= conversation.author.profile.image_url %>"
+    },
+    "subject": "<%= escape_javascript(conversation.text) %>",
+    "threadCount": <%= conversations.messages.size %>,
+    "date": "<%= conversation.updated_at %>"
+  }
+  <% unless @conversations.last == conversation %>
+    <%="," %>
+  <% end %>
+<% end %>
+]
+
