@@ -1,6 +1,7 @@
 {
   "id" : <%= @status_message.id %>,
   "author": {
+    "id": <%= @status_message.author.id %>,
     "name": "<%= escape_javascript(@status_message.author.name) %>",
     "avatar": "<%= @status_message.author.profile.image_url %>"
   },

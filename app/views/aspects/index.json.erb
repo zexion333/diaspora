@@ -3,6 +3,7 @@
   {
     "id" : <%= post.id %>,
     "author": {
+      "id": <%= post.author.id %>,
       "name": "<%= escape_javascript(post.author.name) %>",
       "avatar": "<%= post.author.profile.image_url %>"
     },

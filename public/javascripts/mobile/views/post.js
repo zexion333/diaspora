@@ -1,16 +1,13 @@
 App.Views.Post = Backbone.View.extend({
-  tagName: "div",
   className: "post-view",
 
   initialize: function(){
     this.render();
   },
 
-
   events: {
-    "submit #new_comment_form" : "submitComment"
+    "submit #new_comment_form" : "submitComment",
   },
-
 
   render: function() {
     var $content = $("#content").html("");

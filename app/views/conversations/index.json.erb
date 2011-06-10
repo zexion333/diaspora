@@ -3,6 +3,7 @@
   {
     "id" : <%= convo.id %>,
     "author": {
+      "id": <%= convo.author.id %>,
       "name": "<%= escape_javascript(convo.author.name) %>",
       "avatar": "<%= convo.author.profile.image_url %>"
     },
