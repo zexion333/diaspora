@@ -55,4 +55,15 @@ class Comment < ActiveRecord::Base
   def parent= parent
     self.post = parent
   end
+
+  def as_json *args
+    {
+      :author => {
+        :avatar => self.author.profile.image_url,
+        :name => self.author.name
+      },
+      :text => self.text,
+      :date => self.created_at
+    }
+  end
 end

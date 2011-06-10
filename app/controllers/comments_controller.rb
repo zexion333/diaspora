@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   before_filter :authenticate_user!
 
   respond_to :html, :mobile
-  respond_to :json, :only => :show
+  respond_to :json
 
   rescue_from ActiveRecord::RecordNotFound do
     render :nothing => true, :status => 404
@@ -29,6 +29,7 @@ class CommentsController < ApplicationController
           format.js{ render(:create, :status => 201)}
           format.html{ render :nothing => true, :status => 201 }
           format.mobile{ redirect_to @comment.post }
+          format.json{ render :json => @comment.to_json, :status => 201}
         end
       else
         render :nothing => true, :status => 422

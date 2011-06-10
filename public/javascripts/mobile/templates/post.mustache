@@ -19,28 +19,13 @@
     
   <div id="comments">
     {{#comments}}
-      <div class="stream-element comment">
-        {{#author}}
-          <img src='{{avatar}}' class='avatar'/>
-        {{/author}}
-        <div class='content'>
-          <div class='stream-date'>
-            {{date}}
-          </div>
-          {{#author}}
-            <div class="author-name">{{name}}</div>
-          {{/author}}
-          {{{text}}}
-        </div>
-      </div>
+      {{> comment}}
     {{/comments}}
   </div>
 </div>
 
-<div id="compose-area">
-  <form method="post">
-    <textarea></textarea>
-    <br/>
-    <input type="submit" value="Comment"/>
-  </form>
-</div>
+<form id="new_comment_form" method="post">
+  <textarea></textarea>
+  <br/>
+  <input type="submit" value="Comment"/>
+</form>
