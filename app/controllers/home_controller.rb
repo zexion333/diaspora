@@ -17,11 +17,7 @@ class HomeController < ApplicationController
   end
 
   def toggle_mobile
-   if session[:mobile_view]
-     session[:mobile_view] = false
-   else
-     session[:mobile_view] = true
-   end
+    session[:mobile_view] = !session[:mobile_view]
     redirect_to :back
   end
 end
