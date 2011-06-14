@@ -1,6 +1,14 @@
 App.Controllers.People = Backbone.Controller.extend({
   routes: {
+    "people": "index",
     "people/:id": "show"
+  },
+
+  index: function(){
+    new App.Views.Search({
+      model : {}
+    }).render();
+    return this;
   },
 
   show: function(id){

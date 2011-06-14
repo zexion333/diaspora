@@ -71,6 +71,8 @@ header {
     img{
       position: relative;
       top: 7px;
+      height: 30px;
+      width: 30px;
     }
 
     &.dimmed{
@@ -89,8 +91,8 @@ header {
   width: 40px;
 
   &.large{
-    height: 90px;
-    width: 90px;
+    height: 100px;
+    width: 100px;
   }
 }
 
@@ -149,7 +151,6 @@ header {
 
 #comments{
   border-top: 2px solid lighten($blue,34%);
-
 }
 
 .comment {
@@ -169,6 +170,10 @@ header {
 .author-name{
   font-weight: 700;
   font-size: 14px;
+  a{
+    color: #000;
+    text-decoration: none;
+  }
 }
 
 .comments-counter{
@@ -190,6 +195,14 @@ header {
   img{
     position: relative;
     top: 3px;
+  }
+}
+
+#person-header{
+  padding: 10px;
+  img{
+    float: left;
+    margin-right: 10px;
   }
 }
 
