@@ -110,23 +110,18 @@ class StatusMessage < Post
   end
 
   def as_json(opts={})
-    opts ||= {}
-    if(opts[:format] == :twitter)
-      {
-        :id => self.guid,
-        :text => self.formatted_message(:plain_text => true),
-        :entities => {
-            :urls => [],
-            :hashtags => self.tag_list,
-            :user_mentions => self.mentioned_people.map{|p| p.diaspora_handle},
-          },
-        :source => 'diaspora',
-        :created_at => self.created_at,
-        :user => self.author.as_json(opts)
-      }
-    else
-      super(opts)
-    end
+    {
+      :id => self.id,
+      :author => {
+        :id => self.author.id,
+        :name => self.author.name,
+        :avatar => self.author.profile.image_url
+      },
+      :text => self.text,
+      :photos => self.photos.map{|p| p.url},
+      :commentCount => self.comments.size,
+      :date => self.created_at
+    }
   end
 
   def socket_to_user(user_or_id, opts={})

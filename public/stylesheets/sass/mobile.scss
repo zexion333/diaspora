@@ -170,6 +170,7 @@ header {
 .author-name{
   font-weight: 700;
   font-size: 14px;
+  line-height: 20px;
   a{
     color: #000;
     text-decoration: none;
@@ -200,9 +201,44 @@ header {
 
 #person-header{
   padding: 10px;
+  height: 100px;
+  margin-bottom: 3px;
   img{
     float: left;
     margin-right: 10px;
+  }
+}
+
+#subnav{
+  @include linear-gradient(#fafafa, #eee);
+  @include box-shadow(0, 1px, 1px, #f3f3f3);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #eee;
+  border: 1px solid #e0e0e0;
+  border-bottom: 1px solid #cfcfcf;
+  border-left: none;
+  border-right: none;
+  color: #aaa;
+  margin-bottom: 5px;
+  text-shadow: 0 -2px 0 #fff;
+
+  img{
+    position:relative;
+    top: 5px;
+    margin-right: 1px;
+  }
+
+  > div{
+    display: inline-block;
+    width: 49%;
+    padding: 10px 0;
+    padding-top: 6px;
+
+    &:first-child{
+      border-right: 1px solid #ccc;
+    }
   }
 }
 

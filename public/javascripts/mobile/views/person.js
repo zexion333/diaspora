@@ -5,20 +5,21 @@ App.Views.Person = Backbone.View.extend({
     this.render();
   },
 
-
   events: {
   },
 
-
   render: function() {
     var $content = $("#content").html("");
-    TemplateHelper.get("person", $.proxy(function(templateHtml) {
-      $(this.el).html(
-        $.mustache(templateHtml, this.model.toJSON())
-      ).appendTo($content);
-    }, this));
-    return this;
+    TemplateHelper.get("person", $.proxy(function(personTemplateHtml) {
+      TemplateHelper.get("stream_element", $.proxy(function(postTemplateHtml) {
 
+        $(this.el).html(
+          $.mustache(personTemplateHtml, this.model.toJSON(), {stream_element: postTemplateHtml})
+        ).appendTo($content);
+      }, this));
+    }, this));
+
+    return this;
   }
 
 });

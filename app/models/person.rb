@@ -193,26 +193,13 @@ class Person < ActiveRecord::Base
   end
 
   def as_json(opts={})
-    opts ||= {}
-    if(opts[:format] == :twitter)
-      {
-        :id => self.guid,
-        :screen_name => self.diaspora_handle,
-        :name => self.name,
-        :created_at => self.created_at,
-        :profile_image_url => self.profile.image_url(:thumb_small),
-        :profile => self.profile.as_json(opts)
-      }
-    else
-      {:id => self.guid,
-       :name => self.name,
-       :avatar => self.profile.image_url(:thumb_small),
-       :handle => self.diaspora_handle,
-       :url => "/people/#{self.id}"}
-    end
-  end
-
-  def to_twitter(format=:json)
+    {:id => self.guid,
+     :name => self.name,
+     :avatar => self.profile.image_url(:thumb_small),
+     :handle => self.diaspora_handle,
+     :url => "/people/#{self.id}",
+     :posts => self.posts.order("created_at DESC")
+     }
   end
 
   def has_photos?
