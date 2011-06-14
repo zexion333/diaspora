@@ -103,5 +103,6 @@ stylesheets:
     - public/stylesheets/rtl.css
 
   mobile:
+    - public/stylesheets/ui.css
     - public/stylesheets/mobile.css
  

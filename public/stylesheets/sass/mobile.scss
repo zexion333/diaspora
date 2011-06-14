@@ -11,32 +11,24 @@ body,html{
   font-size: 14px;
   line-height: 18px;
   max-width: 100%;
+  height: 100%;
+  
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-input,
 textarea{
   @include border-radius(3px);
   @include box-shadow(0, 0, 0, 0);
   font-size: 17px;
-  padding: 5px;
   border: 1px solid #ccc;
-}
-
-textarea{
   width: 100%;
-  margin-left: 10px;
-}
-
-input[type=submit]{
-  @include border-radius(6px);
-  font-weight: bold;
-  background-color: #777;
-  color: #fff;
-}
-
-textarea{
-  width: 90%;
   line-height: 19px;
+}
+
+input[type='submit']{
+  font-size: 13px;
+  padding: 8px 14px;
 }
 
 #compose-area{
@@ -94,8 +86,8 @@ header {
 }
 
 .avatar {
-  height: 45px;
-  width: 45px;
+  height: 50px;
+  width: 50px;
 
   &.large{
     height: 100px;
@@ -112,8 +104,8 @@ header {
 .inbox-element,
 #post-show{
   padding: 8px;
-  min-height: 40px;
-  color: #333;
+  min-height: 50px;
+  color: #444;
 }
 
 .inbox-element,
@@ -121,6 +113,7 @@ header {
   border-bottom: 1px solid #eee;
 
   .avatar{
+    @include border-radius(3px);
     float: left;
   }
 
@@ -165,6 +158,7 @@ header {
   border-top: 2px solid lighten($blue,34%);
 }
 
+#new_comment_form,
 .comment {
   background-color: lighten($blue,44%);
   border-bottom: 1px solid white;
@@ -176,7 +170,13 @@ header {
 }
 
 .content{
-  padding-left: 54px;
+  padding-left: 58px;
+}
+
+#comments{
+  .content{
+    padding-left: 48px;
+  }
 }
 
 .author-name{
@@ -264,6 +264,21 @@ header {
     margin-bottom: 10px;
   }
   max-width: 200px;
+}
+
+#new_comment_form{
+  width: 97%;
+  text-align: right;
+  padding: 5px;
+  padding-bottom: 20px;
+  position: relative;
+  bottom: 0;
+
+  textarea{
+    -webkit-box-flex: 1;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+  }
 }
 
 /* spinner loading animation on asterisk */

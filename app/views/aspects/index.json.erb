@@ -7,7 +7,7 @@
       "name": "<%= escape_javascript(post.author.name) %>",
       "avatar": "<%= post.author.profile.image_url %>"
     },
-    "text": "<%= escape_javascript(post.text) %>",
+    "text": <%= post.text.to_json.html_safe %>,
     "photos": <%= post.photos.to_json.html_safe %>,
     "commentCount": <%= post.comments.size %>,
     "date": "<%= post.created_at %>"
