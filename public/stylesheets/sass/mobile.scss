@@ -8,8 +8,8 @@ body,html{
   margin: 0;
   padding: 0;
   font-family: 'helvetica neue', helvetica, arial, sans;
-  font-size: 13px;
-  line-height: 17px;
+  font-size: 14px;
+  line-height: 18px;
   max-width: 100%;
 }
 
@@ -83,12 +83,12 @@ header {
 
 #content {
   position: relative;
-  top: 50px;
+  top: 45px;
 }
 
 .avatar {
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
 
   &.large{
     height: 100px;
@@ -99,7 +99,7 @@ header {
 .stream-element,
 .inbox-element,
 #post-show{
-  padding: 10px;
+  padding: 8px;
   min-height: 40px;
   color: #333;
 }
@@ -164,7 +164,7 @@ header {
 }
 
 .content{
-  padding-left: 50px;
+  padding-left: 54px;
 }
 
 .author-name{
@@ -202,7 +202,6 @@ header {
 #person-header{
   padding: 10px;
   height: 100px;
-  margin-bottom: 3px;
   img{
     float: left;
     margin-right: 10px;
