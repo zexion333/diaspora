@@ -8,11 +8,7 @@
       "avatar": "<%= post.author.profile.image_url %>"
     },
     "text": "<%= escape_javascript(post.text) %>",
-    <% if post.photos.size > 0 %>
-      "photos": [<%= post.photos.map{|p| p.url} %>],
-    <% else %>
-      "photos": [],
-    <% end %>
+    "photos": <%= post.photos.to_json.html_safe %>,
     "commentCount": <%= post.comments.size %>,
     "date": "<%= post.created_at %>"
   }

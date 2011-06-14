@@ -6,11 +6,7 @@
     "avatar": "<%= @status_message.author.profile.image_url %>"
   },
   "text": "<%= escape_javascript(@status_message.text) %>",
-  <% if @status_message.photos.size > 0 %>
-    "photos": <% @status_message.photos.map{|p| p.image_url}.to_json %>,
-  <% else %>
-    "photos": [],
-  <% end %>
+  "photos": <%= @status_message.photos.to_json.html_safe %>,
   "commentCount": <%= @status_message.comments.size %>,
   "date": "<%= @status_message.created_at %>",
 

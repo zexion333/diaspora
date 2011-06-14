@@ -16,11 +16,20 @@
   {{/author}}
   {{{text}}}
 
-  <br/>
+  {{#photos}}
+    <div class="stream-photos">
+      {{#photo}}
+        <img src='{{thumb_medium}}' class="stream-photo"/>
+      {{/photo}}
+    </div>
+  {{/photos}}
+
   {{#commentCount}}
-    <div class="comments-counter">
-      <img src='/images/icons/comment.gif' height=14 width=14/>
-      {{commentCount}}
+    <div class="post-info">
+      <div class="comments-counter">
+        <img src='/images/icons/comment.gif' height=14 width=14/>
+        {{commentCount}}
+      </div>
     </div>
   {{/commentCount}}
 </div>

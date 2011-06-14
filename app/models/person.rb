@@ -198,7 +198,7 @@ class Person < ActiveRecord::Base
      :avatar => self.profile.image_url(:thumb_small),
      :handle => self.diaspora_handle,
      :url => "/people/#{self.id}",
-     :posts => self.posts.order("created_at DESC")
+     :posts => self.posts.where(:type => "StatusMessage").order("created_at DESC")
      }
   end
 
