@@ -43,12 +43,15 @@ javascripts:
   login:
     - public/javascripts/login.js
   mobile:
-    - public/javascripts/vendor/jquery152.min.js
+    - public/javascripts/mobile/vendor/jquery-1.6.1.min.js
 
     - public/javascripts/vendor/underscore.js
     - public/javascripts/vendor/backbone-min.js
 
     - public/javascripts/vendor/Mustache.js
+
+    - public/javascripts/mobile/vendor/scrollability.js
+    - public/javascripts/mobile/vendor/touch-scroll.js
 
     - public/javascripts/mobile/app.js
     - public/javascripts/mobile/helpers.js

@@ -37,8 +37,9 @@
           = link_to(owner_image_tag, "/#people/#{current_user.id}", :class => 'nav-element')
 
 
-    #content
-      = yield
+    #wrapper
+      #content{:class => "scrollable vertical"}
+        = yield
 
     -if AppConfig[:google_a_site]
       :javascript

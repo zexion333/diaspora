@@ -83,7 +83,14 @@ header {
 
 #content {
   position: relative;
-  top: 45px;
+}
+
+#wrapper{
+  position: absolute;
+  top:44px;
+  bottom:0;
+  width: 100%;
+  left:0;
 }
 
 .avatar {

@@ -118,7 +118,7 @@ class StatusMessage < Post
         :avatar => self.author.profile.image_url
       },
       :text => self.text,
-      :photos => self.photos,
+      :photos => [*self.photos],
       :commentCount => self.comments.size,
       :date => self.created_at
     }
