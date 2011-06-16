@@ -1,17 +1,5 @@
-App.Views.InboxElement = Backbone.View.extend({
+App.Views.MessageElement = Backbone.View.extend({
   className: "inbox-element",
-
-  initialize: function(){
-    this.model.bind("change", this.render);
-  },
-
-  events: {
-    "click" : "showConversation"
-  },
-
-  showConversation: function(){
-    window.location = "#conversations/" + this.model.get('id')
-  },
 
   render: function() {
     var $content = $("#content");

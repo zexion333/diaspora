@@ -1,6 +1,8 @@
 App.Controllers.Conversations = Backbone.Controller.extend({
   routes: {
-    "conversations": "index"
+    "conversations": "index",
+    "conversations/new": "newConvo",
+    "conversations/:id": "show"
   },
 
   index: function() {
@@ -14,5 +16,35 @@ App.Controllers.Conversations = Backbone.Controller.extend({
     });
 
     return this;
+  },
+
+  show: function(id){
+    conversation = new App.Models.Conversation({"id" : id});
+    conversation.messages.fetch({
+      success: function(){
+        $("#content").html("");
+
+        _.each(conversation.messages.models, function(model) {
+          new App.Views.MessageElement({
+            model: model
+          }).render();
+        }); 
+
+      },
+
+      failure: function(){
+        console.log("err0r");
+      }
+    });
+
+    return this;
+  },
+
+
+  newConvo: function(){
+    $("#content").html("new message view goes here");
+
+    return this;
   }
+
 });

@@ -6,7 +6,7 @@ App.Views.Inbox = new (Backbone.View.extend({
   render: function() {
     $("#content")
         .html("")
-        .prepend("<div id=\"subheader\">new message</div>");
+        .prepend("<div id=\"new_message_button\">+ new message</div>");
 
     _.each(App.Collections.Inbox.models, function(model) {
       new App.Views.InboxElement({
@@ -16,4 +16,5 @@ App.Views.Inbox = new (Backbone.View.extend({
 
     return this;
   }
+
 }));

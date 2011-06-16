@@ -13,9 +13,6 @@ App.Controllers.People = Backbone.Controller.extend({
 
   show: function(id){
     var person = new App.Models.Person({id : id});
-
-    console.log(person);
-
     person.fetch({
       success: function(){
         new App.Views.Person({

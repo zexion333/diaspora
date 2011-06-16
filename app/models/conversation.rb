@@ -69,4 +69,18 @@ class Conversation < ActiveRecord::Base
       Notification.notify(user, received_msg, person) if msg.respond_to?(:notification_type)
     end
   end
+
+  def as_json(opts={})
+    {
+      :id => self.id,
+      :author => {
+        :id => self.author.id,
+        :name => self.author.name,
+        :avatar => self.author.profile.image_url
+      },
+      :text => self.messages.last.text,
+      :messageCount => self.messages.size,
+      :date => self.messages.last.created_at
+    }
+  end
 end

@@ -71,6 +71,19 @@ class Message < ActiveRecord::Base
     Notifications::PrivateMessage unless user.person == person
   end
 
+  def as_json(opts={})
+    {
+      :id => self.id,
+      :author => {
+        :id => self.author.id,
+        :name => self.author.name,
+        :avatar => self.author.profile.image_url
+      },
+      :text => self.text,
+      :date => self.created_at
+    }
+  end
+
   private
   def participant_of_parent_conversation
     if self.parent && !self.parent.participants.include?(self.author)
