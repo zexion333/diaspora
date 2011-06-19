@@ -1,5 +1,6 @@
 App.Controllers.Posts = Backbone.Controller.extend({
   routes: {
+    "posts/new": "newPost",
     "posts/:id": "show"
   },
 
@@ -14,6 +15,12 @@ App.Controllers.Posts = Backbone.Controller.extend({
       }
     });
 
+    return this;
+  },
+
+  newPost: function(){
+    new App.Views.Publisher({
+    }).render();
     return this;
   }
 

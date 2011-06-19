@@ -9,8 +9,15 @@
       </div>
     {{/author}}
 
+
     <div id="post-content">
       {{{text}}}
+      {{#photos}}
+        <div class="post-photos">
+          {{#photo}}
+            <img src='{{thumb_large}}' class="post-photo'/>
+          {{/photo}}
+      {{/photos}}
     </div>
 
     <div class='stream-date'>

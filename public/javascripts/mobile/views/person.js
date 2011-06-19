@@ -6,9 +6,14 @@ App.Views.Person = Backbone.View.extend({
   },
 
   events: {
+    "click #new-message" : "sendMessage",
+    "click #new-mention" : "postWithMention"
   },
 
   render: function() {
+
+    console.log(this.model);
+
     var $content = $("#content").html("");
     TemplateHelper.get("person", $.proxy(function(personTemplateHtml) {
       TemplateHelper.get("stream_element", $.proxy(function(postTemplateHtml) {
@@ -20,6 +25,13 @@ App.Views.Person = Backbone.View.extend({
     }, this));
 
     return this;
-  }
+  },
 
+  sendMessage: function(){
+    window.location = "#conversations/new?person_id=" + this.model.get("id");
+  },
+
+  postWithMention: function(){
+    window.location = "#posts/new?person_id=" + this.model.get("id");
+  }
 });

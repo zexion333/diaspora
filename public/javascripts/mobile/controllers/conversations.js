@@ -42,7 +42,7 @@ App.Controllers.Conversations = Backbone.Controller.extend({
 
 
   newConvo: function(){
-    $("#content").html("new message view goes here");
+    $("#content").html("");
 
     return this;
   }

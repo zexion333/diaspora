@@ -49,7 +49,7 @@ header {
   color: #fff;
   height: 44px;
 
-  #nav{
+  nav{
     display: -webkit-box;
   }
 
@@ -93,6 +93,11 @@ header {
     height: 100px;
     width: 100px;
   }
+}
+
+.stream-photo,
+.post-photo{
+  max-width: 100%;
 }
 
 .post-info,

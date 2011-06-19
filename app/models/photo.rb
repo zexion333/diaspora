@@ -105,6 +105,7 @@ class Photo < Post
         :url => self.url,
         :thumb_small => self.url(:thumb_small),
         :thumb_medium=> self.url(:thumb_medium),
+        :thumb_large=> self.url(:thumb_large),
         :text => self.text
       }
     }

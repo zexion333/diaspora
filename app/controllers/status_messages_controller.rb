@@ -5,26 +5,29 @@
 class StatusMessagesController < ApplicationController
   before_filter :authenticate_user!
 
-  respond_to :html
-  respond_to :mobile
-  respond_to :json, :only => :show
-
+  respond_to :html, :mobile, :json
 
   helper_method :object_aspect_ids
 
   def new
-    @person = Person.find(params[:person_id])
-    @aspect = :profile
-    @contact = current_user.contact_for(@person)
-    @aspects_with_person = []
-    if @contact
-      @aspects_with_person = @contact.aspects
-      @aspect_ids = @aspects_with_person.map(&:id)
-      @contacts_of_contact = @contact.contacts
 
-      render :layout => nil
-    else
-      redirect_to :back
+    respond_with do |format|
+      format.all{
+        @person = Person.find(params[:person_id])
+        @aspect = :profile
+        @contact = current_user.contact_for(@person)
+        @aspects_with_person = []
+        if @contact
+          @aspects_with_person = @contact.aspects
+          @aspect_ids = @aspects_with_person.map(&:id)
+          @contacts_of_contact = @contact.contacts
+
+          render :layout => nil
+        else
+          redirect_to :back
+        end
+      }
+      format.json{ render :json => {}, :status => :ok }
     end
   end
 

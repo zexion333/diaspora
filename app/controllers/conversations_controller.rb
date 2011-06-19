@@ -72,7 +72,11 @@ class ConversationsController < ApplicationController
     end
     @contacts_json = all_contacts_and_ids.to_json.gsub!(/(")/, '\\"')
     @contact = current_user.contacts.find(params[:contact_id]) if params[:contact_id]
-    render :layout => false
+
+    respond_to do |format|
+      format.all { render :layout => false }
+      format.json{ render :json => {"contacts" => all_contacts_and_ids} }
+    end
   end
 
 end
