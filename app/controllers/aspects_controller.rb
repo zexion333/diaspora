@@ -11,6 +11,7 @@ class AspectsController < ApplicationController
   respond_to :json, :only => [:show, :create]
 
   def index
+    @landing = true
     if params[:a_ids]
       @aspects = current_user.aspects.where(:id => params[:a_ids])
     else

@@ -87,8 +87,7 @@
       - flash.each do |name, msg|
         = content_tag :div, msg, :id => "flash_#{name}"
 
-    %header{:class=>('landing' unless current_user)}
-      = render 'layouts/header'
+    = render 'layouts/header'
 
     .container{:style=> "#{yield(:break_the_mold)}"}
       .span-24.last{:style=> "#{yield(:break_the_mold)}"}

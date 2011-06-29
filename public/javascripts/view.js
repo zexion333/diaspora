@@ -6,11 +6,11 @@ var View = {
   initialize: function() {
 
     $(window).scroll(function(){
-      var header = $('header');
-      if( $(this).scrollTop() > 30){
-        header.addClass('fixit');
+      var aspect_nav = $('#aspect_nav');
+      if( $(this).scrollTop() > 37){
+        aspect_nav.addClass('fixit');
       } else {
-        header.removeClass('fixit');
+        aspect_nav.removeClass('fixit');
       }
     });
 
