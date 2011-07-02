@@ -35,18 +35,20 @@
         %h4
           = t('.to')
       .span-10.last
-        = text_field_tag "contact_autocomplete"
+        = text_field_tag "contact_autocomplete", "", :tabindex => 10
       .clearfix
 
       .span-2
         %h4
           = t('.subject')
       .span-10.last
-        = conversation.text_field :subject
+        = conversation.text_field :subject, :tabindex => 11
 
       .span-10.prepend-2.last
-        = text_area_tag "conversation[text]", '', :rows => 5
+        = text_area_tag "conversation[text]", '', :rows => 5, :tabindex => 12
+
+      .clearfix
 
       .bottom_submit_section
-        = submit_tag t('cancel'), :class => 'button', :type => :reset, :rel => "close"
-        = conversation.submit t('.send'), :disable_with => t('shared.publisher.posting'), :class => 'button'
+        = submit_tag t('cancel'), :class => 'button', :type => :reset, :confirm => "Abandon changes?", :rel => "close", :tabindex => 14
+        = conversation.submit t('.send'), :disable_with => t('shared.publisher.posting'), :class => 'button creation', :tabindex => 13
