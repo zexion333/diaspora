@@ -102,6 +102,7 @@ Diaspora::Application.routes.draw do
     match :user_search
     get   :admin_inviter
     get   :stats, :as => 'pod_stats'
+    post   'add_oauth'   => :admin_oauth, :as => 'admin_oauth'
   end
 
   resource :profile, :only => [:edit, :update]

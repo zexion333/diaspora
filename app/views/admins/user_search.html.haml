@@ -55,6 +55,26 @@
 
 %br
   post to Diaspora v1
+= params[:oauth]
+= form_for OAuth2::Provider.client_class.new, :url => admin_oauth_path do |client|
+  %p
+    = client.label :name
+    = client.text_field :name
+
+  %p
+    = client.label :permissions_overview
+    = client.text_field :permissions_overview
 
 
+  %p
+    = client.label :description
+    = client.text_field :description
+  %p
+    = client.label :application_base_url
+    = client.text_field :application_base_url
+  %p
+    = client.label :icon_url
+    = client.text_field :icon_url
 
+  %p
+    = client.submit

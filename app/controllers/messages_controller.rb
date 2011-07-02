@@ -12,7 +12,6 @@ class MessagesController < ApplicationController
   def create
     cnv = Conversation.joins(:conversation_visibilities).where(:id => params[:conversation_id],
                               :conversation_visibilities => {:person_id => current_user.person.id}).first
-
     if cnv
       message = Message.new(:conversation_id => cnv.id, :text => params[:message][:text], :author => current_user.person)
       
@@ -27,5 +26,4 @@ class MessagesController < ApplicationController
       render :nothing => true, :status => 422
     end
   end
-
 end

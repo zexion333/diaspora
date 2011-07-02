@@ -1,6 +1,6 @@
 class AdminsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :redirect_unless_admin
+  #before_filter :redirect_unless_admin
 
   def user_search
     params[:user] ||= {}
@@ -65,5 +65,12 @@ class AdminsController < ApplicationController
       @#{plural}[:change] = percent_change(@#{plural}[:yesterday], @#{plural}[:day_before])
 DATA
     )
+  end
+
+
+  def admin_oauth
+    client = OAuth2::Provider.client_class.create params[:o_auth2_provider_models_active_record_client]
+    puts client.inspect
+    redirect_to '/admins/user_search', :params => {:oauth => client.inspect}
   end
 end
