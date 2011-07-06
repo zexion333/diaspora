@@ -21,6 +21,7 @@ module Diaspora
     end
 
     def build_tags
+      puts tag_strings
       self.tag_list = tag_strings
     end
 

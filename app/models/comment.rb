@@ -14,6 +14,13 @@ class Comment < ActiveRecord::Base
 
   include Diaspora::Socketable
 
+  
+  include Diaspora::Taggable
+
+  acts_as_taggable_on :tags
+  extract_tags_from :text
+  before_create :build_tags
+
   xml_attr :text
   xml_attr :diaspora_handle
 
@@ -27,6 +34,15 @@ class Comment < ActiveRecord::Base
   before_save do
     self.text.strip! unless self.text.nil?
   end
+
+  def raw_message
+    @raw_message||=self.text
+  end
+
+  def raw_message=(text)
+    @raw_message = text
+  end
+
   def diaspora_handle
     self.author.diaspora_handle
   end
