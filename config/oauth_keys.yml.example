@@ -7,3 +7,6 @@ facebook:
 tumblr:
   consumer_key: ""
   consumer_secret: "" 
+google:
+  client_id: ""
+  client_secret: ""
