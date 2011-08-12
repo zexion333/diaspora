@@ -3374,6 +3374,7 @@ ul#getting_started
 
 .green
   :color green
+
 .resend
   :color black
   &:hover
@@ -3395,3 +3396,55 @@ ul#getting_started
     :display inline
     :margin
       :right 0.5em
+
+.aspect_collection
+  :position relative
+  :display inline-block
+
+  a,
+  a:hover,
+  a:active
+    :color white !important
+
+  :margin 20px 80px
+    
+  .avatar_collage
+    :height 160px
+    :width 120px
+
+  .avatar
+    @include box-shadow(0,1px,6px,#444)
+    :height 120px
+    :width 120px
+    :position absolute
+
+    &:nth-child(1)
+      :z-index 5
+      :top 20px
+
+    &:nth-child(2)
+      :z-index 4
+      :-webkit-transform rotate(5deg)
+      :left 30px
+      :top 0px
+    
+    &:nth-child(3)
+      :z-index 3
+      :-webkit-transform rotate(-5deg)
+      :left -25px
+      :top -10px
+
+  .aspect_info
+    :text
+      :align center
+
+    h4
+      :font
+        :weight bold
+      :color #333
+
+      :margin
+        :bottom -2px
+
+    p
+      :color #777

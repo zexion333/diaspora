@@ -33,6 +33,10 @@ class ContactsController < ApplicationController
     end
   end
 
+  def aspect_view
+    @aspects = current_user.aspects
+  end
+
   def sharing
     @contacts = current_user.contacts.sharing.includes(:aspect_memberships)
     render :layout => false
