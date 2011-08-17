@@ -10,11 +10,11 @@ class ContactsController < ApplicationController
     when "only_sharing"
       current_user.contacts.only_sharing
     when "all"
-      current_user.contacts
+      current_user.contacts.includes(:person => :profile)
     else
       if params[:a_id]
         @aspect = current_user.aspects.find(params[:a_id])
-        @aspect.contacts
+        @aspect.contacts.includes(:person => :profile)
       else
         current_user.contacts.receiving
       end

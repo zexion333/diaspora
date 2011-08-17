@@ -77,7 +77,7 @@
         .right
           &#9660;
         .avatar
-          = owner_image_tag(:thumb_small)
+          = owner_image_tag(:size => :thumb_small)
         = link_to current_user.name, '#', :title => current_user.diaspora_handle
       %li= link_to t('.profile'), current_user.person
       %li= link_to t('.settings'), edit_user_path

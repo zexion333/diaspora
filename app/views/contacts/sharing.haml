@@ -16,7 +16,7 @@
       %ul
         - for contact in @contacts
           %li{:data=>{:contact_id=>contact.id}}
-            = person_image_tag contact.person
+            = person_image_tag(contact.person)
             %h4.name
               = link_to contact.person.name, contact.person
               .description

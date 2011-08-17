@@ -1,6 +1,6 @@
 module UsersHelper
-  def owner_image_tag(size=nil)
-    person_image_tag(current_user.person, size)
+  def owner_image_tag(opts)
+    person_image_tag(current_user.person, opts)
   end
 
   def owner_image_link

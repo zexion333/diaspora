@@ -2979,44 +2979,108 @@ ul.left_nav
   :top 50px
 
 #people_stream.contacts
-  .stream_element
+
+  .contact_element
+    :position relative
+    :display inline-block
     :padding 10px
-    :min-height 30px
-    .right
-      :top 16px
+    :height 160px
+    :width 120px
+    :max-width 120px
+    :margin
+      :right 50px
+      :bottom 15px
 
-      a
-        @include opacity(0.3)
+    &:hover
+      a.from
+        :color darken($blue,5%)
+      .info
+        @include opacity(1)
 
-        &:hover
-          @include opacity(1)
+      .aspect_selector
+        @include opacity(1)
 
-    .from
+      .right a
+        @include opacity(0.9)
+
+    .name
       :position relative
-      a
-        :color rgb(85,80,80)
+      :width 100%
+      :top 135px
+      :text
+        :align center
+      :overflow hidden
+      :white-space nowrap
+      :text-overflow ellipsis
 
-    .content
-      :padding
-        :left 40px
+    .avatar
+      @include box-shadow(0,1px,6px,#444)
+      :position absolute
+      :height 120px
+      :width 120px
+      :margin
+        :bottom 3px
+
+    .aspect_selector
+      :z-index 5
+      :position absolute
+      :top 95px
+      :left 0
+      :width 100%
+      :text-align center
+
+    .right
+      :z-index 5
+      :right 15px
+      :bottom 50px
+
+    .aspect_selector,
+    .right a
+      @include transition(opacity, 0.2s)
+      @include opacity(0)
+      &:hover
+        @include opacity(1)
+
+    .right a
+
+    a.from
+      :color #333
+      :font
+        :weight bold
+      &:hover
+        :text
+          :decoration none
+
     .info
+      @include transition(opacity, 0.1s)
+      @include opacity(0)
       :margin
         :top -2px
+      :font
+        :size smaller
+      :color #888
+      :cursor default
 
-  .avatar
-    :height 30px
-    :width 30px
+#aspect_header_info
+  :z-index -1
+  :position absolute
+  :width 100%
+  :top 8px
+  :text-align center
+  h4
+    :color #999
+
+#fixed_left_bar
+  :position fixed
+
+#aspect_header
+  :position relative
+  :margin
+    :bottom 20px
 
 #aspect_controls
-  @include border-radius(2px)
-  :background
-    :color #fafafa
-  :border 1px solid #ccc
-  :padding 10px
-  :min-height 23px
-
-  .conversation_button
-    :float right
+  :float right
+  :margin-top 6px
 
 #selected_aspect_contacts
   .avatar

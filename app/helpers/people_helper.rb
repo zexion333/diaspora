@@ -35,18 +35,25 @@ module PeopleHelper
     "<a data-hovercard='#{remote_or_hovercard_link}' #{person_href(person)} class='#{opts[:class]}' #{ ("target=" + opts[:target]) if opts[:target]}>#{h(person.name)} </a>".html_safe
   end
 
-  def person_image_tag(person, size=nil)
-    size ||= :thumb_small
-    "<img alt=\"#{h(person.name)}\" class=\"avatar\" data-person_id=\"#{person.id}\" src=\"#{person.profile.image_url(size)}\" title=\"#{h(person.name)} (#{h(person.diaspora_handle)})\">".html_safe
+  def person_image_tag(person, opts={})
+    opts[:size] ||= :thumb_small
+
+    if opts[:title] == false
+      opts[:title] = ""
+    else
+      opts[:title] = "#{h(person.name)} (#{h(person.diaspora_handle)})"
+    end
+
+    "<img alt=\"#{h(person.name)}\" class=\"avatar\" data-person_id=\"#{person.id}\" src=\"#{person.profile.image_url(opts[:size])}\" title=\"#{opts[:title]}\">".html_safe
   end
 
   def person_image_link(person, opts={})
     return "" if person.nil? || person.profile.nil?
     if opts[:to] == :photos
-      link_to person_image_tag(person, opts[:size]), person_photos_path(person)
+      link_to person_image_tag(person, opts), person_photos_path(person)
     else
       "<a #{person_href(person)} class='#{opts[:class]}' #{ ("target=" + opts[:target]) if opts[:target]}>
-      #{person_image_tag(person, opts[:size])}
+      #{person_image_tag(person, opts)}
       </a>".html_safe
     end
   end

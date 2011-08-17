@@ -5,6 +5,8 @@
 - content_for :page_title do
   Your aspects
 
+- content_for :break_the_mold do
+  width:100%;
 
 
 %h2{:style => "position:relative;"}
@@ -22,7 +24,7 @@
       = link_to contacts_path(:a_id => aspect.id) do
         .avatar_collage
           = aspect.contacts.includes(:person).limit(3).all.each do |contact|
-            = person_image_tag(contact.person, :thumb_medium)
+            = person_image_tag(contact.person, :size => :thumb_medium, :title => false)
 
       .aspect_info
         %h4
