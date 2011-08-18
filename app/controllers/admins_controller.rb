@@ -49,6 +49,13 @@ class AdminsController < ApplicationController
 
   end
 
+  def admin_oauth
+    puts params.inspect
+    client = OAuth2::Provider.client_class.create params[:o_auth2_provider_models_active_record_client]
+    puts client.inspect
+    redirect_to '/admins/user_search', :params => {:oauth => client.inspect}
+  end
+
   private
   def percent_change(today, yesterday)
     sprintf( "%0.02f", ((today-yesterday) / yesterday.to_f)*100).to_f
@@ -68,9 +75,4 @@ DATA
   end
 
 
-  def admin_oauth
-    client = OAuth2::Provider.client_class.create params[:o_auth2_provider_models_active_record_client]
-    puts client.inspect
-    redirect_to '/admins/user_search', :params => {:oauth => client.inspect}
-  end
 end
