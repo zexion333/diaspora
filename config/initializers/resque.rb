@@ -1,6 +1,12 @@
 require 'resque'
 
 begin
+  # Configure Redis to Go 
+  if redis_to_go = ENV["REDISTOGO_URL"]
+    uri = URI.parse(redis_to_go)
+    Resque.redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+  end 
+
   if ENV['SINGLE_PROCESS']
     if Rails.env == 'production'
       puts "WARNING: You are running Diaspora in production without Resque workers turned on.  Please don't do this."
