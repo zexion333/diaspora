@@ -15,6 +15,7 @@ gem 'nokogiri'
 gem 'settingslogic', '2.0.6'
 
 gem 'foreman'
+gem 'heroku'
 
 gem 'vanna', :git => "git://github.com/MikeSofaer/vanna.git"
 
