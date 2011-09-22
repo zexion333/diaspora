@@ -33,6 +33,7 @@ class LikesController < ApplicationController
   def destroy
     if @like = Like.where(:id => params[:id], :author_id => current_user.person.id).first
       current_user.retract(@like)
+      @like.target.reload
       respond_to do |format|
         format.all { }
         format.js { render 'likes/update' }

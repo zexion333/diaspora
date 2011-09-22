@@ -11,19 +11,26 @@ module LikesHelper
   def like_action(target, current_user=current_user)
     if target.instance_of?(Comment)
       if current_user.liked?(target)
-        link_to t('shared.stream_element.unlike'), comment_like_path(target, current_user.like_for(target)), :method => :delete, :class => 'unlike', :remote => true
+        link_to like_heart_red, comment_like_path(target, current_user.like_for(target)), :method => :delete, :class => 'unlike', :remote => true
       else
-        link_to t('shared.stream_element.like'), comment_likes_path(target, :positive => 'true'), :method => :post, :class => 'like', :remote => true
+        link_to like_heart, comment_likes_path(target, :positive => 'true'), :method => :post, :class => 'like', :remote => true
       end
 
     else
 
       if current_user.liked?(target)
-        link_to t('shared.stream_element.unlike'), post_like_path(target, current_user.like_for(target)), :method => :delete, :class => 'unlike', :remote => true
+        link_to like_heart_red, post_like_path(target, current_user.like_for(target)), :method => :delete, :class => 'unlike', :remote => true
       else
-        link_to t('shared.stream_element.like'), post_likes_path(target, :positive => 'true'), :method => :post, :class => 'like', :remote => true
+        link_to like_heart, post_likes_path(target, :positive => 'true'), :method => :post, :class => 'like', :remote => true
       end
-
     end
+  end
+
+  def like_heart
+    image_tag('icons/heart.png', :class => "heart")
+  end
+
+  def like_heart_red
+    image_tag('icons/heart_red.png', :class => "heart")
   end
 end
