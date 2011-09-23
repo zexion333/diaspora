@@ -9,7 +9,7 @@ module LikesHelper
   end
 
   def like_action(target, current_user=current_user)
-    if target.instance_of?(Comment)
+    if target.is_a?(Comment)
       if current_user.liked?(target)
         link_to like_heart_red, comment_like_path(target, current_user.like_for(target)), :method => :delete, :class => 'unlike', :remote => true
       else

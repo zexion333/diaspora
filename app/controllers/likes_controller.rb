@@ -14,6 +14,7 @@ class LikesController < ApplicationController
       @like = current_user.build_like(:positive => positive, :target => target)
 
       if @like.save
+        @like.target.reload
         Rails.logger.info("event=create type=like user=#{current_user.diaspora_handle} status=success like=#{@like.id} positive=#{positive}")
         Postzord::Dispatcher.build(current_user, @like).post
 
