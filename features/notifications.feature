@@ -46,7 +46,7 @@ Feature: Notifications
     And a user with email "bob@bob.bob" is connected with "alice@alice.alice"
     And I am on "alice@alice.alice"'s page
     And I preemptively confirm the alert
-    And I follow "Like"
+    And I click on selector ".heart"
     And I wait for the ajax to finish
 
     And I go to the destroy user session page
