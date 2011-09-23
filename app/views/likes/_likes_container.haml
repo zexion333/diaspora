@@ -10,7 +10,11 @@
       = link_to object.likes_count, post_likes_path(object.id), :class => "expand_likes" 
   %span.hidden.likes_list
 
-- unless !user_signed_in? || @commenting_disabled
-  = like_action(object, current_user)
+  - unless !user_signed_in? || @commenting_disabled
+    = like_action(object, current_user)
+  - else
+    = like_heart
+
 - else
-  = like_heart
+  - unless !user_signed_in? || @commenting_disabled
+    = like_action(object, current_user, :class => "hidden_like_action")

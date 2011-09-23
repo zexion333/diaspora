@@ -705,7 +705,7 @@ form.new_comment
 
 
 .comment
-  .like_action
+  .hidden_like_action
     @include transition(opacity)
     @include opacity(0)
 
@@ -713,7 +713,7 @@ form.new_comment
       :content " · "
 
   &:hover
-    .like_action
+    .hidden_like_action
       @include opacity(1)
 
   .likes,
