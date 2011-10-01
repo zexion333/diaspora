@@ -1,0 +1,12 @@
+%ul#app-menu
+  %li
+    = person_image_link(current_user.person)
+    = person_link(current_user.person)
+
+  %li#global-search
+    = form_tag(people_path, :method => 'get', :class => "search_form") do
+      = text_field_tag 'q', nil, :placeholder => t('find_people'), :results => 5
+
+  %li
+    = link_to "Log out", destroy_user_session_path
+

@@ -195,4 +195,26 @@ $(document).ready(function(){
     $("#new_status_message").submit();
   });
 
+  /* app menu */
+  $("#app-menu-toggle").bind("tap click", function(evt) {
+    evt.preventDefault();
+
+    var src = $(evt.target).attr('href'),
+        main = $("#app-container");
+
+    if(main.hasClass('menu-active')) {
+      $("#app-menu").remove();
+      main.removeClass('menu-active');
+    }
+    else {
+      $.get(src, function(data){
+        var menu = $(data).addClass('menu-active'),
+            main = $("#app-container");
+
+        main.addClass("menu-active");
+        $('body').append(menu);
+      });
+    }
+  });
+
 });

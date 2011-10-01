@@ -159,8 +159,8 @@ Diaspora::Application.routes.draw do
 
 
   # Mobile site
-
   get 'mobile/toggle', :to => 'home#toggle_mobile', :as => 'toggle_mobile'
+  get 'app_menu' => 'home#app_menu', :as => 'app_menu'
 
   #Protocol Url
   get 'protocol' => redirect("https://github.com/diaspora/diaspora/wiki/Diaspora%27s-federation-protocol")

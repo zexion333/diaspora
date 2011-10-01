@@ -228,6 +228,7 @@ body {
   background: #555555;
   max-width: 100%;
   margin-top: 55px;
+  overflow-x: hidden;
 }
 
 .message {
@@ -797,6 +798,61 @@ header {
       }
     }
   }
+}
+
+#app-container.menu-active {
+  position: fixed;
+  left: 80%;
+  width: 180%;
+}
+
+#app-menu {
+  @include box-shadow(2px, 0px, 10px, #000);
+
+  text-align: left;
+  font-size: larger;
+
+  background: {
+    color: #222;
+  }
+
+  color: #eee;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  width: 100%;
+  min-height: 120%;
+  z-index: 15;
+
+  .avatar {
+    height: 35px;
+    width: 35px;
+    margin: {
+      right: 10px;
+    }
+  }
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    border: {
+      bottom: 1px solid #000;
+    }
+    padding: 10px;
+  }
+
+  a,
+  a:visited {
+    color: #eee;
+  }
+}
+
+#app-menu.menu-active {
+  width: 80%;
+  left: 0;
 }
 
 

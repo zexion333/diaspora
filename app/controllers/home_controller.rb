@@ -4,6 +4,11 @@
 
 class HomeController < ApplicationController
 
+  before_filter :authenticate_user!, :only => :app_menu
+
+  respond_to :mobile,
+             :html, :except => [:app_menu]
+
   def show
     if current_user
       redirect_to :controller => 'aspects', :action => 'index'
@@ -22,5 +27,9 @@ class HomeController < ApplicationController
      session[:mobile_view] = true
    end
     redirect_to :back
+  end
+
+  def app_menu
+    render :layout => false
   end
 end
