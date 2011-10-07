@@ -42,6 +42,7 @@ class Services::Facebook < Service
   end
 
   def save_friends
+=begin
     url = "https://graph.facebook.com/me/friends?fields[]=name&fields[]=picture&access_token=#{URI.escape(self.access_token)}"
     response = Faraday.get(url)
     data = JSON.parse(response.body)['data']
@@ -70,6 +71,7 @@ class Services::Facebook < Service
     else
       ServiceUser.import(data, :on_duplicate_key_update => OVERRIDE_FIELDS_ON_FB_UPDATE + [:updated_at])
     end
+=end
   end
 
   private
