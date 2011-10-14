@@ -5,151 +5,174 @@
 - content_for :page_title do
   = t('.edit_account')
 
-#section_header
-  %h2
+.page-header
+  %h1
     = t('settings')
   = render 'shared/settings_nav'
 
-.span-12.prepend-5.last
-  .span-5.append-1
+%section.span16
+  .row
     %h3
       = t('.your_handle')
     %p
       %b= current_user.diaspora_handle
-  .span-5.last
-    %h3
-      = t('.your_email')
+
+  .row
     = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
       = f.error_messages
-      %p
-        = f.text_field :email, :value => @user.unconfirmed_email || @user.email
-        = f.submit t('.change_email')
-    %br
+      %fieldset
+        %legend
+          = t('.your_email')
+        .clearfix
+          = f.label :email, t('.your_email')
+          .input
+            = f.text_field :email, :value => @user.unconfirmed_email || @user.email
+
+        .actions
+          = f.submit t('.change_email'), :class => 'btn primary'
+          = link_to t('cancel'), edit_user_path, :class => 'btn'
+
     - if @user.unconfirmed_email.present?
       %p= t('.email_awaiting_confirmation', :email => @user.email, :unconfirmed_email => @user.unconfirmed_email)
-    %br
 
-  %br
-  %br
-  %hr
-  %br
+%section.span16
+  .row
+    = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
+      = f.error_messages
+      %fieldset
+        %legend
+          = t('.change_password')
 
-  %h3 
-    = t('.change_password')
-  = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
-    = f.error_messages
+        .clearfix
+          = f.label :current_password, t('.current_password')
+          .input
+            = f.password_field :current_password
 
-    %p
-      = f.label :current_password, t('.current_password')
-      = f.password_field :current_password
-    %p
-      = f.label :password, t('.new_password')
-      = f.password_field :password
-    %p
-      = f.label :password_confirmation, t('password_confirmation')
-      = f.password_field :password_confirmation
+        .clearfix
+          = f.label :password, t('.new_password')
+          .input
+            = f.password_field :password
 
-    .submit_block
-      = link_to t('cancel'), edit_user_path
-      = t('or')
-      = f.submit t('.change_password')
+        .clearfix
+          = f.label :password_confirmation, t('password_confirmation')
+          .input
+            = f.password_field :password_confirmation
 
-  %br
-  %br
-  %hr
-  %br
+        .actions
+          = f.submit t('.change_password'), :class => 'btn primary'
+          = link_to t('cancel'), edit_user_path, :class => 'btn'
 
-  %h3 
-    = t('.change_language')
-  = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
-    = f.error_messages
+%section.span16
+  .row
+    = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
+      %fieldset
+        = f.error_messages
+        %legend
+          = t('.change_language')
 
-    %p
-      = f.select :language, available_language_options
-      = f.submit t('.change_language')
+        .clearfix
+          .input
+            = f.select :language, available_language_options
 
-  %br
-  %br
-  %hr
+        .actions
+          = f.submit t('.change_language'), :class => 'btn primary'
+          = link_to t('cancel'), edit_user_path, :class => 'btn'
 
-  %br
+%section.span16
+  .row
+    = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
+      = f.error_messages
 
-  %h3#stream-preferences
-    = t('.stream_preferences')
-  = form_for current_user, :url => user_path, :html => { :method => :put } do |f|
-    = f.error_messages
+%section.span16
+  .row
+    = form_for current_user, :url => user_path, :html => { :method => :put } do |f|
+      = f.error_messages
+      %fieldset
+        %legend#stream-preferences
+          = t('.stream_preferences')
 
-    %p.checkbox_select
-      = f.label t('.show_community_spotlight')
-      = f.check_box :show_community_spotlight_in_stream
+        .clearfix
+          .input
+            = f.label t('.show_community_spotlight')
+            .input
+              = f.check_box :show_community_spotlight_in_stream
 
-    %br
-    = f.submit t('.change'), :class => 'button'
+        .actions
+          = f.submit t('.change'), :class => 'button'
 
-  %br
-  %br
-  %hr
-  %br
+%section.span16
+  .row
+    = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
+      = f.error_messages
+      %fieldset
+        %legend
+          = t('.receive_email_notifications')
 
-  %h3 
-    = t('.receive_email_notifications')
-  = form_for 'user', :url => user_path, :html => { :method => :put } do |f|
-    = f.error_messages
+        = f.fields_for :email_preferences do |type|
+          .clearfix
+            .input
+              %ul.inputs-list
+                %li
+                  .label
+                    = type.check_box :also_commented, {:checked =>  @email_prefs['also_commented']}, false, true 
+                    %span= t('.also_commented')
 
-    = f.fields_for :email_preferences do |type|
-      #email_prefs
-        %p.checkbox_select
-          = type.label t('.also_commented')
-          = type.check_box :also_commented, {:checked =>  @email_prefs['also_commented']}, false, true 
-        %br
-        %p.checkbox_select
-          = type.label t('.mentioned') 
-          = type.check_box :mentioned, {:checked =>  @email_prefs['mentioned']}, false, true 
+                %li
+                  .label
+                    = type.check_box :mentioned, {:checked =>  @email_prefs['mentioned']}, false, true 
+                    %span
+                      = t('.mentioned') 
+
+                %li
+                  .label
+                    = type.check_box :comment_on_post, {:checked =>  @email_prefs['comment_on_post']}, false, true 
+                    %span
+                      = t('.comment_on_post') 
+
+                %li
+                  .label
+                    = type.check_box :private_message, {:checked =>  @email_prefs['private_message']}, false, true 
+                    %span
+                      = t('.private_message')
+                %li
+                  .label
+                    = type.check_box :started_sharing, {:checked =>  @email_prefs['started_sharing']}, false, true 
+                    %span
+                      = t('.started_sharing') 
+
+                %li
+                  .label
+                    = type.check_box :liked, {:checked =>  @email_prefs['liked']}, false, true 
+                    %span
+                      = t('.liked') 
+
+                %li
+                  .label
+                    = type.check_box :reshared, {:checked =>  @email_prefs['reshared']}, false, true 
+                    %span
+                      = t('.reshared') 
+
+          .actions
+            = f.submit t('.change'), :class => 'btn primary'
+            = link_to t('cancel'), edit_user_path, :class => 'btn'
 
 
-        %br
-        %p.checkbox_select
-          = type.label t('.comment_on_post') 
-          = type.check_box :comment_on_post, {:checked =>  @email_prefs['comment_on_post']}, false, true 
-        
-        %br
-        %p.checkbox_select
-          = type.label t('.private_message')
-          = type.check_box :private_message, {:checked =>  @email_prefs['private_message']}, false, true 
-          
-        %br
-        %p.checkbox_select
-          = type.label t('.started_sharing') 
-          = type.check_box :started_sharing, {:checked =>  @email_prefs['started_sharing']}, false, true 
+%section.span16
+  .row
+    .span8
+      %h3
+        = t('.export_data')
+      .row
+        .span3
+          = link_to t('.download_xml'), export_user_path, :class => "btn"
+        .span3
+          = link_to t('.download_photos'), export_photos_user_path, :class => "btn"
 
-        %br
-        %p.checkbox_select
-          = type.label t('.liked') 
-          = type.check_box :liked, {:checked =>  @email_prefs['liked']}, false, true 
+    .span8
+      %h3
+        = t('.close_account')
 
-        %br
-        %p.checkbox_select
-          = type.label t('.reshared') 
-          = type.check_box :reshared, {:checked =>  @email_prefs['reshared']}, false, true 
-    %br
-    = f.submit t('.change')
-
-  %br
-  %br
-  %hr
-  %br
-
-
-  #account_data.span-5.append-2
-    %h3 
-      = t('.export_data')
-    = link_to t('.download_xml'), export_user_path, :class => "button"
-    %br
-    = link_to t('.download_photos'), export_photos_user_path, :class => "button"
-
-  .span-5.last
-    %h3 
-      = t('.close_account')
-    = link_to t('.close_account'), user_path,
-      :confirm => t('are_you_sure'), :method => :delete,
-        :class => "button"
+      = link_to t('.close_account'), user_path,
+        :confirm => t('are_you_sure'), :method => :delete,
+          :class => "btn error"
+>>>>>>> wip

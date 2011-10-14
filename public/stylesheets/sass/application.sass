@@ -17,41 +17,12 @@ a
     :text
       :decoration underline
 
-p
-  :word-wrap break-word
-
-h1
-  :color #333
-  :position relative
-  :font
-    :weight bold
-  :letter
-    :spacing -1px
-
-h1, h2, h3, h4
-  :margin
-    :bottom 5px
-
-  small
-    :font-size small
-    :color #999
-
-h1
-  :color #111
 
 ul > li
   :list-style none
 
 .content ul li
   :list-style disc
-
-form
-  :position relative
-  input,
-  textarea,
-  label
-    :font
-      :size auto
 
 .rtl
   :direction rtl
@@ -63,12 +34,6 @@ form
 .avatar
   :width 50px
   :height 50px
-
-#content
-  :background
-    :color #fff
-  :border 1px solid #ccc
-  :height 100%
 
 #flash_notice,
 #flash_error,
@@ -300,7 +265,7 @@ ul.as-selections
     :margin 5px 0
 
   .stream_element
-    :padding 15px
+    :padding 10px
     :min-height 50px
     :border
       :bottom 1px solid #ddd
@@ -321,9 +286,8 @@ ul.as-selections
           :size smaller
 
 .from
-  a
-    :font
-      :weight bold
+  :margin-top 0
+  :padding-top 0
 
 .arrow
   :color #ccc
@@ -400,10 +364,6 @@ ul.as-selections
 .stream_element
   :position relative
   :word-wrap break-word
-  :color #555
-
-  :font
-    :size 13px
 
   a.author
     :font
@@ -415,18 +375,6 @@ ul.as-selections
       :top 0
     :padding
       :left 60px
-
-    :font
-      :weight normal
-
-    p
-      :margin
-        :top 0
-        :bottom 10px
-      :font
-        :size 12px
-      :line
-        :height 18px
 
     .photo_attachments
       :margin
@@ -467,7 +415,7 @@ ul.as-selections
         :margin
           :top -1px
 
-  .delete
+  a.delete
     @include opacity(0.3)
     :padding 5px
 
@@ -497,12 +445,6 @@ ul.as-selections
         :color $blue
 
 .status_message_show
-  .stream_element
-    .content
-      p
-        :font
-          :size 1em
-
   .comment_box
     :width 653px
     :margin
@@ -833,23 +775,6 @@ a.paginate, #infscr-loading
       :size 16px
     :color #333
 
-input:not([type='submit']):not([type='reset']):not([type='hidden']):not(.as-input),
-textarea
-  @include border-radius(2px)
-
-  :font
-    :family 'Arial', 'Helvetica', sans-serif
-    :size 14px
-
-  :padding 0.3em
-  :display block
-  :width 100%
-  :border 1px solid #ccc
-  :height auto
-
-input[type='checkbox']
-  :width auto !important
-
 .submit_block
   :text
     :align right
@@ -861,22 +786,9 @@ form p
 
 form p.checkbox_select
   :width 75%
-  label
-    :left 25px
-    :top 3px
   img
     :position relative
     :top 6px
-
-label
-  :font
-    :weight normal
-  :color #999
-  :position absolute
-  :top 3px
-  :left 0.48em
-  :text
-    :shadow 0 1px 1px #eee
 
 #file-upload
   input
@@ -931,11 +843,6 @@ label
   form
     :position relative
     :top 0
-
-  label
-    :font
-      :size 14px
-
   .options_and_submit
     :min-height 21px
     :clear both
@@ -1343,10 +1250,6 @@ ul#settings_nav
 .settings_pane
   :display none
 
-#account_data
-  a
-    :line-height 30px
-
 .contact_pictures.horizontal
   img
     :margin-right -5px
@@ -1395,24 +1298,6 @@ input[type="search"]
 #photodropzone
   :padding 0px
   :margin 0px
-
-#section_header
-  :width 100%
-  :border
-    :bottom 2px solid #777
-  :position relative
-
-  :margin
-    :bottom 2em
-  :padding
-    :bottom 1em
-
-  h2
-    :display inline
-
-  .right
-    :margin
-      :top 10px
 
 .modal_title_bar
   :width 100%
@@ -2364,12 +2249,6 @@ ul.show_comments,
       input[type='text']
         :width 95%
 
-      &.checkbox_select
-        label
-          :padding
-            :left 15px
-          :top 0
-        :height 2em
     .right
       :z-index 5
       :top 34px
@@ -2403,9 +2282,6 @@ ul.show_comments,
     :display inline
     :height auto !important
     :top 2px !important
-  label
-    :font-size inherit !important
-    :position static
 
 .public_icon, .service_icon
   :cursor pointer
@@ -2962,16 +2838,12 @@ ul.left_nav
 .stream_container
   :min-height 500px
 
-  h3
-    :margin
-      :bottom 0
   :border
     :left 1px solid #ddd
   :padding
     :left 10px
     :top 20px
   :margin
-    :left -10px
     :top -20px
 
 #aspect_stream_header

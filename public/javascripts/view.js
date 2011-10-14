@@ -4,17 +4,15 @@
 */
 var View = {
   initialize: function() {
-    /* Buttons */
-    $("input:submit").addClass("button");
-
     /* Tooltips */
     this.tooltips.bindAll();
 
-    /* In field labels */
+    /* In field labels
     $("label").inFieldLabels();
     $(document).bind('afterReveal.facebox', function() {
       jQuery("#facebox label").inFieldLabels();
     });
+    */
 
     Diaspora.page.subscribe("stream/scrolled", function() {
       var new_elements = Array.prototype.slice.call(arguments,1)
@@ -114,7 +112,7 @@ var View = {
   tooltips: {
     public_badge: {
       bind: function() {
-        $(".public_badge img").tipsy({
+        $(".public_badge img").twipsy({
           live: true
         });
       }
@@ -122,7 +120,7 @@ var View = {
 
     conversation_participants: {
       bind: function() {
-        $(".conversation_participants img").tipsy({
+        $(".conversation_participants img").twipsy({
           live: true
         });
       }
