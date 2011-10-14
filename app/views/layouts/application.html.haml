@@ -19,13 +19,7 @@
 
     / Social Media Icons are by Paul Robert Lloyd @ http://paulrobertlloyd.com/2009/06/social_media_icons
 
-    / bootstrap/blueprint switch
-    - if @aspect == :getting_started || @page == :logged_out
-      = stylesheet_link_tag "bootstrap.min.css"
-    - else
-      = stylesheet_link_tag "blueprint/screen", :media => 'screen'
-      = stylesheet_link_tag "blueprint/print", :media => 'print'
-
+    = stylesheet_link_tag "http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css"
     = stylesheet_link_tag "login", :media => 'screen'
 
     = include_stylesheets :default, :media => 'all'
@@ -103,10 +97,8 @@
       = render 'layouts/header'
 
     .container{:style=> "#{yield(:break_the_mold)}"}
-      - if @aspsect == :getting_started || @page == :logged_out
-        = yield
-      - else
-        .span-24.last{:style=> "#{yield(:break_the_mold)}"}
+      .span-24.last{:style=> "#{yield(:break_the_mold)}"}
+        .row{:style=> "#{yield(:break_the_mold)}"}
           = yield
 
     %footer
