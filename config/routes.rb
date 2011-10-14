@@ -165,6 +165,10 @@ Diaspora::Application.routes.draw do
     get :me
   end
 
+  scope 'api/v1' do
+    get "me" => 'api_v1#me'
+  end
+
 
   # Mobile site
 
