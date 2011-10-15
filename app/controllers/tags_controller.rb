@@ -1,6 +1,7 @@
 #   Copyright (c) 2010-2011, Diaspora Inc.  This file is
 #   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
+require File.join(Rails.root, 'app', 'models', 'acts_as_taggable_on_tag')
 
 class TagsController < ApplicationController
   skip_before_filter :which_action_and_user
@@ -16,20 +17,8 @@ class TagsController < ApplicationController
     if params[:q] && params[:q].length > 1 && request.format.json?
       params[:q].gsub!("#", "")
       params[:limit] = !params[:limit].blank? ? params[:limit].to_i : 10
-      @tags = ActsAsTaggableOn::Tag.named_like(params[:q]).limit(params[:limit] - 1)
-      @tags.map! do |obj|
-        { :name => ("#"+obj.name),
-          :value => ("#"+obj.name),
-          :url => tag_path(obj.name)
-        }
-      end
-
-      @tags << {
-        :name => ('#' + params[:q]),
-        :value => ("#" + params[:q]),
-        :url => tag_path(params[:q].downcase)
-      }
-      @tags.uniq!
+      @tags = ActsAsTaggableOn::Tag.autocomplete(params[:q]).limit(params[:limit] - 1)
+      prep_tags_for_javascript
 
       respond_to do |format|
         format.json{
@@ -47,6 +36,8 @@ class TagsController < ApplicationController
   def show
     params[:name].downcase!
     @aspect = :tag
+    @tag = ActsAsTaggableOn::Tag.find_by_name(params[:name])
+    @tag_follow_count = @tag.try(:followed_count).to_i
 
     if current_user
       @posts = StatusMessage.owned_or_visible_by_user(current_user)
@@ -75,4 +66,19 @@ class TagsController < ApplicationController
    @tag_followed
  end
 
+  def prep_tags_for_javascript
+    @tags.map! do |obj|
+        { :name => ("#"+obj.name),
+          :value => ("#"+obj.name),
+          :url => tag_path(obj.name)
+        }
+      end
+
+      @tags << {
+        :name => ('#' + params[:q]),
+        :value => ("#" + params[:q]),
+        :url => tag_path(params[:q].downcase)
+      }
+      @tags.uniq!
+  end
 end

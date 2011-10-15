@@ -97,6 +97,7 @@ Diaspora::Application.routes.draw do
     match :user_search
     get   :admin_inviter
     get   :weekly_user_stats
+    get   :correlations
     get   :stats, :as => 'pod_stats'
   end
 
@@ -112,6 +113,7 @@ Diaspora::Application.routes.draw do
 
   get 'featured_users' => "contacts#featured", :as => 'featured_users'
 
+  get 'soup' => "soups#index", :as => 'soup'
 
   resources :people, :except => [:edit, :update] do
     resources :status_messages

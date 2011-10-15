@@ -1,9 +1,10 @@
 require 'spec_helper'
 require File.join(Rails.root, 'spec', 'shared_behaviors', 'stream')
 
-describe MentionStream do
+describe Stream::FollowedTag do
   before do
-    @stream = MentionStream.new(Factory(:user), :max_time => Time.now, :order => 'updated_at')
+    @stream = Stream::FollowedTag.new(Factory(:user), :max_time => Time.now, :order => 'updated_at')
+    @stream.stub(:tag_string).and_return("foo")
   end
 
   describe 'shared behaviors' do

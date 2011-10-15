@@ -16,7 +16,7 @@ class Post < ActiveRecord::Base
   xml_attr :public
   xml_attr :created_at
 
-  has_many :comments, :dependent => :destroy
+  has_many :comments, :order => 'created_at', :dependent => :destroy
 
   has_many :aspect_visibilities
   has_many :aspects, :through => :aspect_visibilities
@@ -28,20 +28,22 @@ class Post < ActiveRecord::Base
   has_many :reshares, :class_name => "Reshare", :foreign_key => :root_guid, :primary_key => :guid
   has_many :resharers, :class_name => 'Person', :through => :reshares, :source => :author
 
+  belongs_to :o_embed_cache
+
   belongs_to :author, :class_name => 'Person'
-  
+
   validates :guid, :uniqueness => true
 
   after_create :cache_for_author
 
   #scopes
   scope :all_public, where(:public => true, :pending => false)
-  scope :includes_for_a_stream,  includes({:author => :profile}, :mentions => {:person => :profile}) #note should include root and photos, but i think those are both on status_message
+  scope :includes_for_a_stream,  includes(:o_embed_cache, {:author => :profile}, :mentions => {:person => :profile}) #note should include root and photos, but i think those are both on status_message
 
   def self.for_a_stream(max_time, order)
     by_max_time(max_time, order).
     includes_for_a_stream.
-    where(:type => BaseStream::TYPES_OF_POST_IN_STREAM).
+    where(:type => Stream::Base::TYPES_OF_POST_IN_STREAM).
     limit(15)
   end
 
@@ -107,11 +109,6 @@ class Post < ActiveRecord::Base
 
   def comment_email_subject
     I18n.t('notifier.a_post_you_shared')
-  end
-
-  # @return [Array<Comment>]
-  def last_three_comments
-    self.comments.order('created_at DESC').limit(3).includes(:author => :profile).reverse
   end
 
   # @return [Integer]
