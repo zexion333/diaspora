@@ -18,4 +18,7 @@
 %div{:class => direction_for(post.text)}
   != markdownify(post, :youtube_maps => post[:youtube_titles])
   - if post.o_embed_cache_id.present?
-    = o_embed_html(post.o_embed_cache)
+    .oembed
+      %iframe{:src => o_embed_cach_path(:id => post.o_embed_cache_id, :url => post.o_embed_cache.url),
+        :width => "100%", :style => "padding:0; margin:0; overflow-x: hidden; frameborder='0';"}
+      = o_embed_html(post.o_embed_cache)

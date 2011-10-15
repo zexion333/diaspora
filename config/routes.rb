@@ -19,6 +19,10 @@ Diaspora::Application.routes.draw do
     resources :likes, :only => [:create, :destroy, :index]
     resources :comments, :only => [:new, :create, :destroy, :index]
   end
+
+  #get "o_embed_cache/:url" => "o_embed_caches#show", :as => "o_embed_caches"
+  resources :o_embed_caches, :only => :show
+
   get 'p/:id' => 'posts#show', :as => 'short_post'
   get 'public_stream' => 'posts#index', :as => 'public_stream'
   # roll up likes into a nested resource above
