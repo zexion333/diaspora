@@ -317,19 +317,17 @@ var Publisher = {
     }
   },
   selectedAspectIds: function() {
-    var aspects = $('#publisher [name="aspect_ids[]"]');
+    var aspects = $('#publisher .dropdown .dropdown_list li.selected');
     var aspectIds = [];
-    aspects.each(function() { aspectIds.push( parseInt($(this).attr('value'))); });
+    aspects.each(function() { aspectIds.push( parseInt($(this).data('aspect_id'))); });
     return aspectIds;
   },
-  toggleAspectIds: function(aspectId) {
-    var hidden_field = $('#publisher [name="aspect_ids[]"][value="'+aspectId+'"]');
-    if(hidden_field.length > 0){
-      hidden_field.remove();
-    } else {
-      $("#publisher .content_creation form").append(
-      '<input id="aspect_ids_" name="aspect_ids[]" type="hidden" value="'+aspectId+'">');
-    }
+  setupTargetAspects: function(aspectId) {
+    var form = $('#publisher .content_creation form');
+    form.find('#aspect_ids_').remove(); // Remove target aspects from previous post
+    $.each(Publisher.selectedAspectIds(), function(index, element) {
+      form.append('<input id="aspect_ids_" name="aspect_ids[]" type="hidden" value="' + element + '">');
+    });
   },
   createCounter: function(service){
     var counter = $("#publisher .counter");
@@ -346,18 +344,17 @@ var Publisher = {
     }
   },
   bindAspectToggles: function() {
-    $('#publisher .dropdown .dropdown_list li').bind("click", function(evt){
+    $('#publisher .dropdown .dropdown_list li').bind("click", function(evt) {
       var li = $(this),
           button = li.parent('.dropdown').find('.button');
 
       AspectsDropdown.toggleCheckbox(li);
       AspectsDropdown.updateNumber(li.closest(".dropdown_list"), null, li.parent().find('li.selected').length, '');
-
-      Publisher.toggleAspectIds(li.attr('data-aspect_id'));
     });
   },
-  beforeSubmit: function(){
-    if($("#publisher .content_creation form #aspect_ids_").length == 0){
+  beforeSubmit: function() {
+    Publisher.setupTargetAspects();
+    if ($('#publisher .content_creation form #aspect_ids_').length == 0) {
       alert(Diaspora.I18n.t('publisher.at_least_one_aspect'));
       return false;
     }

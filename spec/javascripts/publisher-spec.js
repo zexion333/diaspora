@@ -56,45 +56,17 @@ describe("Publisher", function() {
       expect($("#publisher .dropdown .dropdown_list li").first().hasClass("selected")).toBeTruthy();
       expect($("#publisher .dropdown .dropdown_list li").last().hasClass("selected")).toBeTruthy();
     });
-
-    it('binds to the services icons and toggles the hidden field', function(){
-      spyOn(Publisher, 'toggleAspectIds');
-      Publisher.bindAspectToggles();
-      var aspBadge = $("#publisher .dropdown .dropdown_list li").last();
-      var aspNum = aspBadge.attr('data-aspect_id');
-      aspBadge.click();
-
-      expect(Publisher.toggleAspectIds).toHaveBeenCalledWith(aspNum);
-    });
-
   });
 
-  describe('toggleAspectIds', function(){
+  describe('setupTargetAspects', function(){
     beforeEach( function(){
       spec.loadFixture('status_message_new');
     });
 
     it('adds a hidden field to the form if there is not one already', function(){
+      expect($('#publisher [name="aspect_ids[]"]').length).toBe(0);
+      Publisher.setupTargetAspects();
       expect($('#publisher [name="aspect_ids[]"]').length).toBe(2);
-      Publisher.toggleAspectIds(42);
-      expect($('#publisher [name="aspect_ids[]"]').length).toBe(3);
-      expect($('#publisher [name="aspect_ids[]"]').last().attr('value')).toBe('42');
-    });
-
-    it('removes the hidden field if its already there', function() {
-      Publisher.toggleAspectIds(42);
-      expect($('#publisher [name="aspect_ids[]"]').length).toBe(3);
-
-      Publisher.toggleAspectIds(42);
-      expect($('#publisher [name="aspect_ids[]"]').length).toBe(2);
-    });
-
-    it('does not remove a hidden field with a different value', function() {
-      Publisher.toggleAspectIds(42);
-      expect($('#publisher [name="aspect_ids[]"]').length).toBe(3);
-
-      Publisher.toggleAspectIds(99);
-      expect($('#publisher [name="aspect_ids[]"]').length).toBe(4);
     });
   });
 
