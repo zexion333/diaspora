@@ -47,14 +47,14 @@ describe("Publisher", function() {
     it('toggles removed only on the clicked icon', function(){
       Publisher.initialize();
 
-      expect($("#publisher .dropdown .dropdown_list li").first().hasClass("selected")).toBeTruthy();
-      expect($("#publihser .dropdown .dropdown_list li").last().hasClass("selected")).toBeFalsy();
+      expect($("#publisher .dropdown .dropdown_list li:not(.toggleSelection)").first().hasClass("selected")).toBeTruthy();
+      expect($("#publihser .dropdown .dropdown_list li:not(.toggleSelection)").last().hasClass("selected")).toBeFalsy();
 
       Publisher.bindAspectToggles();
       $("#publisher .dropdown .dropdown_list li").last().click();
 
-      expect($("#publisher .dropdown .dropdown_list li").first().hasClass("selected")).toBeTruthy();
-      expect($("#publisher .dropdown .dropdown_list li").last().hasClass("selected")).toBeTruthy();
+      expect($("#publisher .dropdown .dropdown_list li:not(.toggleSelection)").first().hasClass("selected")).toBeTruthy();
+      expect($("#publisher .dropdown .dropdown_list li:not(.toggleSelection)").last().hasClass("selected")).toBeTruthy();
     });
   });
 
