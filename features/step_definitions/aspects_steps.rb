@@ -1,3 +1,5 @@
+# ASPCET NAVIGATION
+
 When /^I click on "([^"]*)" aspect edit icon$/ do |aspect_name|
   When %{I hover over the "ul.sub_nav > li:contains('#{aspect_name}')"}
   within("#aspect_nav") do
@@ -25,5 +27,22 @@ When /^I should see "([^"]*)" aspect unselected$/ do |aspect_name|
   aspect = @me.aspects.where(:name => aspect_name).first
   within("#aspect_nav") do
     page.has_css?("li[data-aspect_id='#{aspect.id}']:not(.active)").should be_true
+  end
+end
+
+# ASPCET DROPDOWN
+
+When /^I press the aspect dropdown$/ do
+  find('.dropdown .button').click
+end
+
+And /^I toggle the aspect "([^"]*)"$/ do |aspect_name|
+  aspect = @me.aspects.where(:name => aspect_name).first
+  find(".dropdown li[data-aspect_id='#{aspect.id}']").click
+end
+
+When /^I toggle aspect dropdown selection$/ do
+  within('.dropdown') do
+    find("li.toggleSelection").click
   end
 end

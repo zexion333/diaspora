@@ -131,7 +131,7 @@ Feature: posting from the main page
       And I go to the aspects page
       Then I should not see "I am eating a yogurt"
 
-    Scenario: change aspects in the middle of the post writing
+    Scenario: change target aspects with the aspect-navigation in the middle of the post writing
       When I select only "NotPostingThingsHere" aspect
       And I expand the publisher
       And I fill in "status_message_fake_text" with "I am eating a yogurt"
@@ -148,3 +148,19 @@ Feature: posting from the main page
       When I am on the aspects page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt and also cornflakes"
+
+    Scenario: change post target aspects with the aspect-dropdown
+      When I expand the publisher
+      And I press the aspect dropdown
+      And I toggle aspect dropdown selection
+      And I toggle the aspect "PostingTo"
+      And I append "I am eating a yogurt" to the publisher
+      And I press "Share"
+      And I wait for the ajax to finish
+
+      And I am on the aspects page
+      And I select only "PostingTo" aspect
+      Then I should see "I am eating a yogurt"
+      When I am on the aspects page
+      And I select only "NotPostingThingsHere" aspect
+      Then I should not see "I am eating a yogurt"
