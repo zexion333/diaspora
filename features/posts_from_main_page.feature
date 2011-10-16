@@ -164,3 +164,33 @@ Feature: posting from the main page
       When I am on the aspects page
       And I select only "NotPostingThingsHere" aspect
       Then I should not see "I am eating a yogurt"
+
+    Scenario: post 2 in a row using the aspects-dropdown
+      When I expand the publisher
+      And I press the aspect dropdown
+      And I toggle aspect dropdown selection
+      And I toggle the aspect "PostingTo"
+      And I append "I am eating a yogurt" to the publisher
+      And I press "Share"
+      And I wait for the ajax to finish
+
+      And I expand the publisher
+      And I press the aspect dropdown
+      And I toggle the aspect "PostingTo"
+      And I toggle the aspect "Besties"
+      And I append "And cornflakes also" to the publisher
+      And I press "Share"
+      And I wait for the ajax to finish
+
+      And I am on the aspects page
+      And I select only "PostingTo" aspect
+      Then I should see "I am eating a yogurt"
+      Then I should not see "And cornflakes also"
+      When I am on the aspects page
+      And I select only "Besties" aspect
+      Then I should see "And cornflakes also"
+      Then I should not see "I am eating a yogurt"
+      When I am on the aspects page
+      And I select only "NotPostingThingsHere" aspect
+      Then I should not see "I am eating a yogurt"
+      Then I should not see "And cornflakes also"
