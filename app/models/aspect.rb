@@ -9,7 +9,7 @@ class Aspect < ActiveRecord::Base
   has_many :contacts, :through => :aspect_memberships
 
   has_many :aspect_visibilities
-  has_many :posts, :through => :aspect_visibilities, :source => :shareable, :source_type => 'Post'
+  has_many :posts, :through => :aspect_visibilities
   
   validates :name, :presence => true, :length => { :maximum => 20 }
 
