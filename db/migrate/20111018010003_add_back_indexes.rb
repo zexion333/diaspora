@@ -12,8 +12,7 @@ class AddBackIndexes < ActiveRecord::Migration
     remove_index :comments, :column => [:commentable_id, :commentable_type]
     remove_index :photos, :column => :status_message_guid
 
-    change_column :share_visibilities, :shareable_type, :string, :default => "Post", :null => false
-    change_column :comments, :commentable_type, :string, :default => "Post", :null => false
-    # reduce index size
+    change_column :share_visibilities, :shareable_type
+    change_column :comments, :commentable_type
   end
 end
