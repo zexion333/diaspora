@@ -40,24 +40,15 @@ SQL
 
 
   def self.down
-    if postgres?
-      execute %{
-        INSERT INTO posts (
-          author_id, public, diaspora_handle, guid, pending, type, text,
-          remote_photo_path, remote_photo_name, random_string, processed_image,
-          youtube_titles, created_at, updated_at, unprocessed_image,
-          object_url, image_url, image_height, image_width,
-          provider_display_name, actor_url, "objectId", root_guid,
-          status_message_guid, likes_count, comments_count, o_embed_cache_id
-        ) SELECT
-          author_id, public, diaspora_handle, guid, pending, 'Photo', text,
-          remote_photo_path, remote_photo_name, random_string, processed_image,
-          NULL, created_at, updated_at, unprocessed_image, NULL, NULL, NULL, NULL,
-          NULL, NULL, NULL, NULL,
-          status_message_guid, 0, comments_count, NULL
-        FROM photos
-      }
+    execute <<SQL
+INSERT INTO posts
+  SELECT NULL AS id, author_id, public, diaspora_handle, guid, pending, 'Photo' AS type, text, remote_photo_path, remote_photo_name, random_string,
+    processed_image, NULL AS youtube_titles, created_at, updated_at, unprocessed_image, NULL AS object_url, NULL AS image_url, NULL AS image_height, NULL AS image_width, NULL AS provider_display_name,
+    NULL AS actor_url, NULL AS objectId, NULL AS root_guid, status_message_guid, 0 AS likes_count, comments_count, NULL AS o_embed_cache_id
+  FROM photos
+SQL
 
+    if postgres?
       execute %{
         UPDATE
           aspect_visibilities
@@ -71,7 +62,6 @@ SQL
           posts.guid=photos.guid
           AND photos.id=aspect_visibilities.shareable_id
         }
-
       execute %{
         UPDATE
           share_visibilities
@@ -86,15 +76,6 @@ SQL
           AND photos.id=share_visibilities.shareable_id
         }
     else
-      execute <<SQL
-INSERT INTO posts
-  SELECT NULL AS id, author_id, public, diaspora_handle, guid, pending, 'Photo' AS type, text, remote_photo_path, remote_photo_name, random_string,
-    processed_image, NULL AS youtube_titles, created_at, updated_at, unprocessed_image, NULL AS object_url, NULL AS image_url, NULL AS image_height, NULL AS image_width
- NULL AS provider_display_name,
-    NULL AS actor_url, NULL AS objectId, NULL AS root_guid, status_message_guid, 0 AS likes_count, comments_count, NULL AS o_embed_cache_id
-  FROM photos
-SQL
-
       execute <<SQL
 UPDATE aspect_visibilities, posts, photos
 SET
