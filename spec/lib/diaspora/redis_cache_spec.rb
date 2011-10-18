@@ -92,6 +92,7 @@ describe RedisCache do
       sql = "long_sql"
       order = "created_at DESC"
       @cache.should_receive(:order).and_return(order)
+<<<<<<< HEAD
       bob.should_receive(:visible_shareable_sql).with(
         Post,
         hash_including(
@@ -99,6 +100,13 @@ describe RedisCache do
           :limit => RedisCache::CACHE_LIMIT,
           :order => order)).
         and_return(sql)
+=======
+      bob.should_receive(:visible_posts_sql).with(hash_including(
+                                                    :type => RedisCache.acceptable_types,
+                                                    :limit => RedisCache::CACHE_LIMIT,
+                                                    :order => order)).
+                                             and_return(sql)
+>>>>>>> parent of bdeae54... Make Photos not inherit from Posts
 
       Post.connection.should_receive(:select_all).with(sql).and_return([])
 

@@ -4,19 +4,14 @@
 
 module Diaspora
   module Shareable
-    require File.join(Rails.root, 'lib/diaspora/web_socket')
-    include Diaspora::Webhooks
-
     def self.included(model)
       model.instance_eval do
-        include ROXML
-        include Diaspora::Guid
-
         has_many :aspect_visibilities, :as => :shareable
         has_many :aspects, :through => :aspect_visibilities
 
         has_many :share_visibilities, :as => :shareable
         has_many :contacts, :through => :share_visibilities
+<<<<<<< HEAD
 
         belongs_to :author, :class_name => 'Person'
 
@@ -125,6 +120,8 @@ module Diaspora
       else
         Rails.logger.info("event=receive payload_type=#{self.class} update=false status=abort sender=#{self.diaspora_handle} reason=#{self.errors.full_messages}")
         false
+=======
+>>>>>>> parent of bdeae54... Make Photos not inherit from Posts
       end
     end
 
