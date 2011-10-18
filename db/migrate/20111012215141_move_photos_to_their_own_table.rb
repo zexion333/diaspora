@@ -26,13 +26,8 @@ FROM posts
 WHERE type = 'Photo'
 SQL
 
-    if postgres?
-      execute "UPDATE aspect_visibilities AS av SET shareable_type='Photo' FROM photos WHERE av.shareable_id=photos.id"
-      execute "UPDATE share_visibilities AS sv SET shareable_type='Photo' FROM photos WHERE sv.shareable_id=photos.id"
-    else
-      execute "UPDATE aspect_visibilities AS av, photos SET av.shareable_type='Photo' WHERE av.shareable_id=photos.id"
-      execute "UPDATE share_visibilities AS sv, photos SET sv.shareable_type='Photo' WHERE sv.shareable_id=photos.id"
-    end
+    execute "UPDATE aspect_visibilities AS av, photos SET av.shareable_type='Photo' WHERE av.shareable_id=photos.id"
+    execute "UPDATE share_visibilities AS sv, photos SET sv.shareable_type='Photo' WHERE sv.shareable_id=photos.id"
 
     # all your base are belong to us!
     execute "DELETE FROM posts WHERE type='Photo'"
