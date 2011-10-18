@@ -122,11 +122,10 @@ describe StatusMessagesController do
       StatusMessage.first.provider_display_name.should == 'mobile'
     end
 
-# disabled to fix federation
-#    it 'sends the errors in the body on js' do
-#      post :create, status_message_hash.merge!(:format => 'js', :status_message => {:text => ''})
-#      response.body.should include('Status message requires a message or at least one photo')
-#    end
+    it 'sends the errors in the body on js' do
+      post :create, status_message_hash.merge!(:format => 'js', :status_message => {:text => ''})
+      response.body.should include('Status message requires a message or at least one photo')
+    end
 
     context 'with photos' do
       before do
