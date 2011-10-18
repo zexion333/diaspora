@@ -1,5 +1,6 @@
 class MovePhotosToTheirOwnTable < ActiveRecord::Migration
   def self.up
+    # create new table to which we can move all records from 'posts' table with type=='Photo'
     create_table "photos", :force => true do |t|
       t.integer  "author_id", :null => false
       t.boolean  "public", :default => false, :null => false
@@ -18,14 +19,31 @@ class MovePhotosToTheirOwnTable < ActiveRecord::Migration
       t.integer  "comments_count"
     end
 
+    # select all records from posts table with type=='Photo' and copy them to the newly created 'photos' table
     execute <<SQL
 INSERT INTO photos
-SELECT id, author_id, public, diaspora_handle, guid, pending, text, remote_photo_path, remote_photo_name, random_string, processed_image,
-created_at, updated_at, unprocessed_image, status_message_guid, comments_count
-FROM posts
-WHERE type = 'Photo'
+  SELECT
+    id,
+    author_id,
+    public,
+    diaspora_handle,
+    guid,
+    pending,
+    text,
+    remote_photo_path,
+    remote_photo_name,
+    random_string,
+    processed_image,
+    created_at,
+    updated_at,
+    unprocessed_image,
+    status_message_guid,
+    comments_count
+  FROM posts
+    WHERE type = 'Photo'
 SQL
 
+    # modify the shareable_type of the moved records from 'Post' to 'Photo' (because they are now found in the photos table and not in the posts table anymore
     if postgres?
       execute "UPDATE aspect_visibilities AS av SET shareable_type='Photo' FROM photos WHERE av.shareable_id=photos.id"
       execute "UPDATE share_visibilities AS sv SET shareable_type='Photo' FROM photos WHERE sv.shareable_id=photos.id"
@@ -34,30 +52,80 @@ SQL
       execute "UPDATE share_visibilities AS sv, photos SET sv.shareable_type='Photo' WHERE sv.shareable_id=photos.id"
     end
 
-    # all your base are belong to us!
+    # our photo records now exist twice: in the new photos table and in the posts table.
+    # we can now remove the records from the posts table
     execute "DELETE FROM posts WHERE type='Photo'"
   end
 
 
   def self.down
     if postgres?
+      # select all photos and copy them back into the posts table. fill columns that are not used by the Photo class with default values
       execute %{
         INSERT INTO posts (
-          author_id, public, diaspora_handle, guid, pending, type, text,
-          remote_photo_path, remote_photo_name, random_string, processed_image,
-          youtube_titles, created_at, updated_at, unprocessed_image,
-          object_url, image_url, image_height, image_width,
-          provider_display_name, actor_url, "objectId", root_guid,
-          status_message_guid, likes_count, comments_count, o_embed_cache_id
+          author_id,
+	  public,
+	  diaspora_handle,
+	  guid,
+	  pending,
+	  type,
+	  text,
+          remote_photo_path,
+	  remote_photo_name,
+	  random_string,
+	  processed_image,
+          youtube_titles,
+	  created_at,
+	  updated_at,
+	  unprocessed_image,
+          object_url,
+	  image_url,
+	  image_height,
+	  image_width,
+          provider_display_name,
+	  actor_url,
+	  "objectId",
+	  root_guid,
+          status_message_guid,
+	  likes_count,
+	  comments_count,
+	  o_embed_cache_id
         ) SELECT
-          author_id, public, diaspora_handle, guid, pending, 'Photo', text,
-          remote_photo_path, remote_photo_name, random_string, processed_image,
-          NULL, created_at, updated_at, unprocessed_image, NULL, NULL, NULL, NULL,
-          NULL, NULL, NULL, NULL,
-          status_message_guid, 0, comments_count, NULL
+          author_id,
+	  public,
+	  diaspora_handle,
+	  guid,
+	  pending,
+	  'Photo',
+	  text,
+          remote_photo_path,
+	  remote_photo_name,
+	  random_string,
+	  processed_image,
+          NULL,
+	  created_at,
+	  updated_at,
+	  unprocessed_image,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+          NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+          status_message_guid,
+	  0,
+	  comments_count,
+	  NULL
         FROM photos
       }
 
+      # revert the modifications in the aspect_visibilities:
+      # because the just created records in posts do not have the same id anymore
+      # we have to identify the newly created records by their guid
+      # and since the newly created records are in the posts table we have to modify
+      # the type correspondingly
       execute %{
         UPDATE
           aspect_visibilities
@@ -72,6 +140,7 @@ SQL
           AND photos.id=aspect_visibilities.shareable_id
         }
 
+      # same as above, only for share_visibilities table
       execute %{
         UPDATE
           share_visibilities
@@ -86,14 +155,45 @@ SQL
           AND photos.id=share_visibilities.shareable_id
         }
     else
+      # select all photos and copy them back into the posts table. fill columns that are not used by the Photo class with default values
       execute <<SQL
 INSERT INTO posts
-  SELECT NULL AS id, author_id, public, diaspora_handle, guid, pending, 'Photo' AS type, text, remote_photo_path, remote_photo_name, random_string,
-    processed_image, NULL AS youtube_titles, created_at, updated_at, unprocessed_image, NULL AS object_url, NULL AS image_url, NULL AS image_height, NULL AS image_width, NULL AS provider_display_name,
-    NULL AS actor_url, NULL AS objectId, NULL AS root_guid, status_message_guid, 0 AS likes_count, comments_count, NULL AS o_embed_cache_id
+  SELECT
+    NULL AS id,
+    author_id,
+    public,
+    diaspora_handle,
+    guid,
+    pending,
+    'Photo' AS type,
+    text,
+    remote_photo_path,
+    remote_photo_name,
+    random_string,
+    processed_image,
+    NULL AS youtube_titles,
+    created_at, updated_at,
+    unprocessed_image,
+    NULL AS object_url,
+    NULL AS image_url,
+    NULL AS image_height,
+    NULL AS image_width,
+    NULL AS provider_display_name,
+    NULL AS actor_url,
+    NULL AS objectId,
+    NULL AS root_guid,
+    status_message_guid,
+    0 AS likes_count,
+    comments_count,
+    NULL AS o_embed_cache_id
   FROM photos
 SQL
 
+      # revert the modifications in the aspect_visibilities:
+      # because the just created records in posts do not have the same id anymore
+      # we have to identify the newly created records by their guid
+      # and since the newly created records are in the posts table we have to modify
+      # the type correspondingly
       execute <<SQL
 UPDATE aspect_visibilities, posts, photos
 SET
@@ -104,6 +204,7 @@ posts.guid=photos.guid AND
 photos.id=aspect_visibilities.shareable_id
 SQL
 
+      # same as above, only for share_visibilities table
       execute <<SQL
 UPDATE share_visibilities, posts, photos
 SET
@@ -115,6 +216,8 @@ photos.id=share_visibilities.shareable_id
 SQL
       end
 
+    # we have now copied all all photos from the photo table back to the posts table
+    # we can delete the photos table now
     execute "DROP TABLE photos"
   end
 end
