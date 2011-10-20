@@ -24,7 +24,6 @@ describe User do
     end
 
     it "contains public posts from people you're following" do
-      pending
       dogs = bob.aspects.create(:name => "dogs")
       bobs_public_post = Factory(:status_message, :text => "hello", :public => true, :author => bob.person)
 
