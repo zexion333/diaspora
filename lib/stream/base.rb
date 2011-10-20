@@ -9,13 +9,13 @@ class Stream::Base
   end
 
   # @return [Person]
-  def random_featured_user
-    @random_featured_user ||= Person.find_by_diaspora_handle(featured_diaspora_id)
+  def random_community_spotlight_member
+    @random_community_spotlight_member ||= Person.find_by_diaspora_handle(spotlight_diaspora_id)
   end
 
   # @return [Boolean]
-  def has_featured_users?
-    random_featured_user.present?
+  def has_communtiy_spotlight?
+    random_community_spotlight_member.present?
   end
   
   #requied to implement said stream
@@ -37,6 +37,11 @@ class Stream::Base
   # @return [ActiveRecord::Relation<Post>]
   def posts
     []
+  end
+
+  # @return [String]
+  def publisher_prefill_text
+    ''
   end
 
   # @return [ActiveRecord::Association<Person>] AR association of people within stream's given aspects
@@ -106,8 +111,8 @@ class Stream::Base
     @contacts_in_stream ||= Contact.where(:user_id => user.id, :person_id => people.map{|x| x.id}).all
   end
 
-  def featured_diaspora_id
-    @featured_diaspora_id ||= AppConfig[:featured_users].try(:sample, 1)
+  def spotlight_diaspora_id
+    @spotlight_diaspora_id ||= AppConfig[:community_spotlight].try(:sample, 1)
   end
 
   # @param post [Post]
@@ -115,7 +120,7 @@ class Stream::Base
   def post_is_from_contact?(post)
     @can_comment_cache ||= {}
     @can_comment_cache[post.id] ||= contacts_in_stream.find{|contact| contact.person_id == post.author.id}.present?
-    @can_comment_cache[post.id] ||= user.person.id == post.author.id
+    @can_comment_cache[post.id] ||= (user.person.id == post.author.id)
     @can_comment_cache[post.id]
   end
 end

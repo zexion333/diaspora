@@ -97,6 +97,7 @@ gem 'haml', '3.1.2'
 gem 'mobile-fu'
 gem 'sass', '3.1.7'
 gem 'will_paginate', '3.0.pre2'
+gem 'client_side_validations'
 
 # web
 
@@ -117,6 +118,7 @@ end
 group :test do
   gem 'capybara', '~> 0.3.9'
   gem 'cucumber-rails', '0.3.2'
+  gem 'cucumber-api-steps', :require => false
   gem 'database_cleaner', '0.6.0'
   gem 'diaspora-client', :git => 'git://github.com/diaspora/diaspora-client.git'
                           #"0.1.0", #:path => '~/workspace/diaspora-client'

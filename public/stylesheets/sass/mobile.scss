@@ -244,7 +244,7 @@ body {
   max-width: 700px;
 }
 
-.stream-element,
+.stream_element,
 .comments {
   overflow: auto;
   position: relative;
@@ -294,7 +294,7 @@ body {
   padding: 10px;
 }
 
-.stream-element .comments {
+.stream_element .comments {
   padding: 0;
   margin: 0;
   top: 8px;
@@ -357,7 +357,7 @@ body {
   }
 }
 
-.stream-element {
+.stream_element {
   @include border-radius(3px);
   @include box-shadow(0, 1px, 5px, rgba(0, 0, 0, 1));
   background: {
@@ -470,8 +470,9 @@ header {
   z-index: 10;
   top: 0;
 
-  /* force hardware acceleration on webkit browsers */
-  -webkit-transform: translateZ(0);
+  /* force hardware acceleration on webkit browsers 
+     10/17/2011 - removed for now, causes ghost doubles of links on some Android browsers */
+  /*-webkit-transform: translateZ(0);*/
 
   border: {
     bottom: 1px solid #222;
@@ -480,9 +481,10 @@ header {
   .right {
     float: right; } }
 
-.stream-element {
-  /* force hardware acceleration on webkit browsers */
-  -webkit-transform: translateZ(0);
+.stream_element {
+  /* force hardware acceleration on webkit browsers 
+     10/17/2011 - removed for now, causes ghost doubles of links on some Android browsers */
+  /*-webkit-transform: translateZ(0);*/
 }
 
 footer {
@@ -582,7 +584,7 @@ footer {
 .floater {
   float: right; }
 
-.stream-element .photo_attachments {
+.stream_element .photo_attachments {
   @include border-radius(3px);
 
   background: {
