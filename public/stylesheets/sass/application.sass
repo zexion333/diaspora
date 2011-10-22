@@ -4,9 +4,8 @@
 @import 'mixins'
 
 body
-  :padding 2em
+  :padding 0
   :margin 0
-    :top 33px
   :background-color $background
 a
   :color $blue
@@ -255,7 +254,7 @@ ul.as-selections
   :position relative
   :top 4px
   :margin
-    :right 26px
+    :right 60px
   &:active
     :top 5px
 
@@ -265,7 +264,7 @@ ul.as-selections
     :margin 5px 0
 
   .stream_element
-    :padding 10px
+    :padding 30px
     :min-height 50px
     :border
       :bottom 1px solid #ddd
@@ -363,8 +362,6 @@ ul.as-selections
   .content
     :margin
       :top 0
-    :padding
-      :left 60px
 
     .photo_attachments
       :margin
@@ -1037,12 +1034,6 @@ header #global_search
 
       :display inline
       :background-color #ccc
-      :border
-        :top 1px solid #111
-
-      :font
-        :size 13px
-
       :border 1px solid #000
 
       &:hover
@@ -1480,7 +1471,7 @@ h3 span.current_gs_step
   :display inline-block
   :min-width 170px
   :top 3px
-  :left 440px
+  :left 500px
   :margin
     :left 20px
 
@@ -2691,7 +2682,6 @@ ul#requested-scopes
   :border
     :left 1px solid #ddd
   :padding
-    :left 10px
     :top 20px
   :margin
     :top -20px
@@ -3238,3 +3228,64 @@ ul#getting_started
 
   &.loading
     @include opacity(0.4)
+
+.container-fluid > .sidebar
+  :position fixed
+  :left 0
+  :top 0
+  :height 100%
+  :background
+    :color whiteSmoke
+  :padding
+    :top 70px
+
+  .row
+    :padding
+      :left 50px
+  a
+    :color #777
+
+  dt
+    :text-transform uppercase
+
+  :font
+    :size smaller
+
+.container-fluid > .content
+  :margin
+    :top 30px
+    :left 220px
+
+.container-fluid
+  :padding-right 0
+
+#larger-header
+  @include box-shadow(0, 1px, 3px, rgba(0,0,0,0.2))
+  :padding 30px
+  :margin
+    :bottom 20px
+
+  :background
+    :color #fcfcfc
+
+  h2
+    :font-weight 300
+
+  :border-bottom 1px solid #aaa
+
+.floater
+  :float right
+
+.sidebar
+  dl
+    a
+      :display block
+      :width 100%
+      :height 100%
+      :padding 2px 0px
+
+      &:hover
+        :background
+          :color #ddd
+        :text
+          :decoration none

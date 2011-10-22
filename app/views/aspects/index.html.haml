@@ -6,7 +6,7 @@
 - content_for :head do
   = include_javascripts :home
 
-.span3
+.sidebar
   .row
     #home_user_badge
       = owner_image_link
@@ -30,12 +30,12 @@
     #followed_tags_listing
       = render 'tags/followed_tags_listings'
 
-.span9
+.content
   .row
     #aspect_stream_container.stream_container
       = render 'aspects/aspect_stream', :stream => @stream
 
-.span3.rightBar.offset1
-  .row
-    = render 'aspects/selected_contacts', :stream => @stream
-    = render 'shared/right_sections'
+/.span3.rightBar.offset1
+/  .row
+/    = render 'aspects/selected_contacts', :stream => @stream
+/    = render 'shared/right_sections'

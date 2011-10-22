@@ -98,9 +98,8 @@
     %header{:class=>('landing' unless current_user)}
       = render 'layouts/header'
 
-    .container{:style=> "#{yield(:break_the_mold)}"}
-      .row{:style=> "#{yield(:break_the_mold)}"}
-        = yield
+    .container-fluid{:style=> "#{yield(:break_the_mold)}"}
+      = yield
 
     %footer
       .container
