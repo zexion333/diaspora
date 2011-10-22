@@ -5,13 +5,15 @@
 - content_for :head do
   = include_javascripts :finder
 
-#section_header
-  %h2
+.page-header
+  %h1
     = t('contacts.index.title')
 
-= render 'shared/contact_sidebar'
+.span3
+  .row
+    = render 'shared/contact_sidebar'
 
-.span-18.last.searchable
+.span13.searchable
   /= search_field_tag :contact_search, "", :id => "contact_list_search", :class => 'contact_list_search', :results => 5, :placeholder => t('search')
   %h3
     = t('.service_friends', :service => params[:provider].titleize)

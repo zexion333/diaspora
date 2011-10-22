@@ -3230,3 +3230,11 @@ ul#getting_started
     :background-color #E3E856
     :border
       :bottom 2px solid lighten(#E3E856, 30%)
+
+#aspect_stream_container,
+#selected_aspect_contacts
+  @include transition(opacity, 0.1s)
+  @include opacity(1)
+
+  &.loading
+    @include opacity(0.4)

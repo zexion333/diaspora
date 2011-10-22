@@ -11,7 +11,7 @@
       $.extend(self, {
         aspectNavigation: aspectNavigation,
         aspectSelectors: aspectNavigation.find("a.aspect_selector[data-guid]"),
-        aspectLis: aspectNavigation.find("li[data-aspect_id]"),
+        aspectLis: aspectNavigation.find("[data-aspect_id]"),
         toggleSelector: aspectNavigation.find("a.toggle_selector")
       });
 
@@ -20,7 +20,7 @@
     });
 
     this.selectedAspects = function() {
-      return self.aspectNavigation.find("li.active[data-aspect_id]").map(function() { return $(this).data('aspect_id') });
+      return self.aspectNavigation.find(".active[data-aspect_id]").map(function() { return $(this).data('aspect_id') });
     };
 
     this.toggleAspect = function(evt) {
@@ -139,13 +139,13 @@
     }
 
     this.fadeOut = function() {
-      $("#aspect_stream_container").fadeTo(100, 0.4);
-      $("#selected_aspect_contacts").fadeTo(100, 0.4);
+      $("#aspect_stream_container").addClass('loading');
+      $("#selected_aspect_contacts").addClass('loading');
     };
 
     this.fadeIn = function() {
-      $("#aspect_stream_container").fadeTo(100, 1);
-      $("#selected_aspect_contacts").fadeTo(100, 1);
+      $("#aspect_stream_container").removeClass('loading');
+      $("#selected_aspect_contacts").removeClass('loading');
     };
   };
 })();

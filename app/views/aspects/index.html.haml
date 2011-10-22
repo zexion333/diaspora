@@ -16,13 +16,16 @@
     - unless has_completed_getting_started?
       %dl
         %dt
-          = link_to "Welcome", getting_started_path, :class => "home_selector"
+          = link_to "Welcome", getting_started_path
+    %dl
+      %dt
+        = link_to t('streams.multi.title'), multi_path
 
     = render 'aspects/aspect_listings', :stream => @stream
 
     %dl
       %dt
-        = link_to t('streams.mentions.title'), mentions_path, :class => 'home_selector'
+        = link_to t('streams.mentions.title'), mentions_path
 
     #followed_tags_listing
       = render 'tags/followed_tags_listings'
