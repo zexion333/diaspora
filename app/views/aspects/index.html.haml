@@ -14,18 +14,18 @@
         = current_user.first_name
 
     - unless has_completed_getting_started?
-      .section
-        %ul.left_nav
-          %li
+      %section
+        %dl
+          %dt
             = link_to "Welcome", getting_started_path, :class => "home_selector"
 
     %section
       = render 'aspects/aspect_listings', :stream => @stream
 
     %section
-      %ul.left_nav
-        .li
-          %b= link_to t('stream.mentions.title'), mentions_path, :class => 'home_selector'
+      %dl
+        %dt
+          = link_to t('streams.mentions.title'), mentions_path, :class => 'home_selector'
 
     %section#followed_tags_listing
       = render 'tags/followed_tags_listings'

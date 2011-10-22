@@ -2217,14 +2217,12 @@ ul.show_comments,
     :position absolute
     :left 0
 
-  h3
+  h5
     :position relative
-    :top 13px
-    :padding
-      :bottom 5px
+    :top 8px
 
   :margin
-    :bottom 54px
+    :bottom 40px
 
   :padding
     :left 60px
@@ -2718,122 +2716,6 @@ ul#requested-scopes
 
     .hold-me
       :display inline-block
-
-ul.left_nav
-  :margin 0
-    :bottom 20px
-  :padding 0
-
-  li
-    :position relative
-    :width 100%
-
-  li.active
-    > a.home_selector:not(.sub_selected)
-      :font
-        :weight 700
-
-    > a:not(.sub_selected)
-      :color #333
-      .contact_count
-        :font
-          :weight 700
-        :color #666
-
-    > a.aspect_selector
-      :background
-        :image url(../images/icons/check_yes_ok.png)
-        :position 3px 50%
-        :repeat no-repeat
-
-  a.aspect_selector,
-  a.home_selector,
-  a.tag_selector,
-  a.element_selector
-    &:active
-      :cursor -webkit-grabbing
-      :cursor -moz-grabbing
-      :cursor grabbing
-
-  a.aspect_selector,
-  a.home_selector,
-  a.tag_selector,
-  a.element_selector,
-  .root_element
-    :display block
-    :width 100%
-    :padding 3px 7px
-
-  .root_element
-    :font-weight 700
-
-  a.aspect_selector,
-  a.home_selector,
-  a.tag_selector,
-  a.element_selector
-    &:hover
-      @include border-radius(2px)
-      :background
-        :color lighten($blue,45%)
-      :text
-        :decoration none
-
-  .edit,
-  .unfollow_icon
-    :margin-top 4px
-    @include transition(opacity)
-    @include opacity(0.3)
-    :float right
-    :display none
-    &:hover
-      @include opacity(1)
-
-  .contact_count
-    :float right
-    @include border-radius(4px)
-    :margin-top 1px
-    :color #999
-    :background
-      :color #eee
-    :padding 0 5px
-    :display inline
-    :font
-      :size 11px
-
-  ul.sub_nav
-    :padding 0
-    :margin 0
-    li
-      :width 162px
-
-    a.aspect_selector,
-    a.toggle_selector,
-    .new_aspect,
-    a.tag_selector
-      :padding
-        :left 25px
-      :width 172px
-
-.section
-  .left_nav
-    a.aspect_selector,
-    a.home_selector
-      :width 150px
-    ul.sub_nav
-      :width 140px
-
-      a.aspect_selector,
-      a.tag_selector
-        :width 140px
-
-      li:hover,
-      li.hover
-        .edit,
-        .unfollow_icon
-          :display inline-block
-
-  .user_card
-    :margin-left 8px
 
 .stream_container
   :min-height 500px
@@ -3345,9 +3227,9 @@ ul#getting_started
     :padding-right 9px
 
 .indicator
-  :margin-top -15px
-  :width 14px
-  :height 4px
+  :margin-top -11px
+  :width 22px
+  :height 3px
   :float right
 
   a

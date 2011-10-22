@@ -98,7 +98,8 @@
               = f.check_box :show_community_spotlight_in_stream
 
         .actions
-          = f.submit t('.change'), :class => 'button'
+          = f.submit t('.change'), :class => 'btn primary'
+          = link_to t('cancel'), edit_user_path, :class => 'btn'
 
 %section.span16
   .row
@@ -175,4 +176,3 @@
       = link_to t('.close_account'), user_path,
         :confirm => t('are_you_sure'), :method => :delete,
           :class => "btn error"
->>>>>>> wip
