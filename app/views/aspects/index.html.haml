@@ -6,7 +6,7 @@
 - content_for :head do
   = include_javascripts :home
 
-.span3.leftNavBar
+.span3
   .row
     #home_user_badge
       = owner_image_link
@@ -14,20 +14,17 @@
         = current_user.first_name
 
     - unless has_completed_getting_started?
-      %section
-        %dl
-          %dt
-            = link_to "Welcome", getting_started_path, :class => "home_selector"
-
-    %section
-      = render 'aspects/aspect_listings', :stream => @stream
-
-    %section
       %dl
         %dt
-          = link_to t('streams.mentions.title'), mentions_path, :class => 'home_selector'
+          = link_to "Welcome", getting_started_path, :class => "home_selector"
 
-    %section#followed_tags_listing
+    = render 'aspects/aspect_listings', :stream => @stream
+
+    %dl
+      %dt
+        = link_to t('streams.mentions.title'), mentions_path, :class => 'home_selector'
+
+    #followed_tags_listing
       = render 'tags/followed_tags_listings'
 
 .span9

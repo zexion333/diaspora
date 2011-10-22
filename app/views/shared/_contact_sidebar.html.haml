@@ -6,10 +6,10 @@
 
 %hr
 
-%ul.left_nav
+%dl
   - if AppConfig[:featured_users]
-    %li{:class => ("active" if @featured)}
+    %dt{:class => ("active" if @featured)}
       = link_to t('contacts.getting_started.community_spotlight'), featured_users_path, :class => "element_selector"
-  %li{:class => ("active" if @finder)}
+  %dt{:class => ("active" if @finder)}
     = link_to "Facebook Friends", friend_finder_path('facebook'), :class => "element_selector"
 

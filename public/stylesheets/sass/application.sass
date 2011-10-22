@@ -274,16 +274,11 @@ ul.as-selections
       :border
         :top none
 
-
     .youtube-player, .vimeo-player
       :border none
       :height 304px
       :width 410px
 
-    .comment
-      .comment_info
-        :font
-          :size smaller
 
 .from
   :margin-top 0
@@ -365,11 +360,6 @@ ul.as-selections
   :position relative
   :word-wrap break-word
 
-  a.author
-    :font
-      :weight bold
-    :color #444
-
   .content
     :margin
       :top 0
@@ -405,15 +395,8 @@ ul.as-selections
         :size smaller
 
     .info
-      :margin
-        :top 2px
       :color #999
       :font-size 11px
-
-    .comments
-      .info
-        :margin
-          :top -1px
 
   a.delete
     @include opacity(0.3)
@@ -526,11 +509,6 @@ ul.show_comments,
 
   :margin 0
   :padding 0
-
-  :font
-    :size 12px
-  :line
-    :height 18px
 
   :position relative
 
@@ -1270,21 +1248,6 @@ ul#settings_nav
   a
     :color #69AEDD
 
-h1,h2,h3,h4
-  .description
-    :font
-      :size 70%
-      :weight 100
-    :color #aaa
-    :margin
-      :top 0.5em
-
-h2,h3,h4
-  .description
-    :font
-      :size 80%
-      :weight 200
-
 input[type="search"]
   :-webkit-appearance textfield
   :-moz-appearance textfield
@@ -1310,6 +1273,11 @@ input[type="search"]
     :padding 10px 20px
     :font
       :size small
+
+.stream_element
+  h5
+    :padding
+      :top 0
 
 #show_text
   :font
@@ -3242,12 +3210,23 @@ ul#getting_started
 .community_spotlight_stream
   .indicator
     :background-color #DE5099
+    :border
+      :bottom 2px solid lighten(#DE5099, 30%)
+
 .followed_tags_stream
   .indicator
     :background-color $blue
+    :border
+      :bottom 2px solid lighten($blue, 30%)
+
 .aspects_stream
   .indicator
     :background-color $green
+    :border
+      :bottom 2px solid lighten($green, 30%)
+
 .mentioned_stream
   .indicator
     :background-color #E3E856
+    :border
+      :bottom 2px solid lighten(#E3E856, 30%)
