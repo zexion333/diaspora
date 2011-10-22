@@ -3169,3 +3169,11 @@ a.toggle_selector
 
   &:hover
     @include opacity(1)
+
+#aspect_stream_container,
+#selected_aspect_contacts
+  @include transition(opacity, 0.1s)
+  @include opacity(1)
+
+  &.loading
+    @include opacity(0.4)
