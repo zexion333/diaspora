@@ -97,9 +97,8 @@
       = render 'layouts/header'
 
     .container{:style=> "#{yield(:break_the_mold)}"}
-      .span-24.last{:style=> "#{yield(:break_the_mold)}"}
-        .row{:style=> "#{yield(:break_the_mold)}"}
-          = yield
+      .row{:style=> "#{yield(:break_the_mold)}"}
+        = yield
 
     %footer
       .container

@@ -19,13 +19,13 @@
   :javascript
     $(document).ready(function() 
       {
-        $("#publisher .dropdown").popover({trigger: 'manual', offset: 10, placement:'below'});
+        $("#publisher .dropdown").popover({trigger: 'manual', offset: 8, placement:'below'});
         $("#publisher .dropdown").bind("click", function(){$(this).popover("hide")});
 
-        $("#publisher #status_message_fake_text").popover({trigger: 'manual', placement: 'right', offset: 30, id: "first_message_explain"});
+        $("#publisher #status_message_fake_text").popover({trigger: 'manual', placement: 'right', offset: 50, id: "first_message_explain"});
         $("#publisher #status_message_fake_text").bind("click", function(){$(this).popover("hide")});
 
-        $("#gs-shim").popover({trigger: 'manual', placement: 'left', offset: -5});
+        $("#gs-shim").popover({trigger: 'manual', placement: 'left', offset: -2});
         $("#gs-shim").bind("click", function(){$(this).popover("hide")});
 
         setTimeout(function(){
