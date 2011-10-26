@@ -18,4 +18,4 @@
 %div{:class => [direction_for(post.text), 'collapsible']}
   != markdownify(post, :youtube_maps => post[:youtube_titles])
   - if post.o_embed_cache_id.present?
-    %iframe{:src => o_embed_cache_path(post.o_embed_cache, :wmode => 'transparent'), :width => oembed_width(post.o_embed_cache), :height => oembed_height(post.o_embed_cache)} 
+    %iframe{:src => o_embed_cache_path(post.o_embed_cache), :width => oembed_width(post.o_embed_cache), :height => oembed_height(post.o_embed_cache)} 
