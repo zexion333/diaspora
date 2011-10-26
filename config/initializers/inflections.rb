@@ -9,6 +9,6 @@
  ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.plural /^(ox)$/i, '\1en'
 #   inflect.singular /^(ox)en/i, '\1'
-#   inflect.irregular 'person', 'people'
+   inflect.irregular 'o_embed_cache', 'o_embed_caches'
 #   inflect.uncountable %w( fish sheep )
  end

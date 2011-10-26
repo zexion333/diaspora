@@ -30,4 +30,12 @@ module OEmbedHelper
   def oembed_image_tag(cache, prefix)
     image_tag(cache.data[prefix + 'url'], cache.options_hash(prefix))
   end
+
+  def oembed_width(cache)
+    cache.data.fetch('width', 420)
+  end
+
+  def oembed_height(cache)
+    cache.data.fetch('height', 260)
+  end
 end

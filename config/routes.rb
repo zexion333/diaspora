@@ -26,6 +26,7 @@ Diaspora::Application.routes.draw do
     resources :likes, :only => [:create, :destroy, :index]
   end
 
+  resources :o_embed_caches, :only => :show
 
   get 'bookmarklet' => 'status_messages#bookmarklet'
 

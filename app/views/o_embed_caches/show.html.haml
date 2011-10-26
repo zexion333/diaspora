@@ -1,0 +1,7 @@
+- if @oembed.present?
+  :css
+    body{
+      margin: 0px;
+      overflow: hidden;
+    }
+  = o_embed_html(@oembed)
