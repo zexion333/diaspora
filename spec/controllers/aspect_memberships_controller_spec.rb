@@ -70,6 +70,15 @@ describe AspectMembershipsController do
     end
 
     context 'json' do
+      it 'generates a jasmine fixture', :fixture => true do
+        post :create,
+          :format => 'json',
+          :person_id => @person.id,
+          :aspect_id => @aspect0.id
+
+        save_fixture(response.body, "ajax_add_person_to_aspect")
+      end
+
       it 'returns a list of aspect ids for the person' do
         post :create,
         :format => 'json',
@@ -93,6 +102,7 @@ describe AspectMembershipsController do
       @aspect0.reload
       @aspect0.contacts.include?(@contact).should be false
     end
+
     it 'does not 500 on an html request' do
       alice.add_contact_to_aspect(@contact, @aspect1)
       delete :destroy,
@@ -102,6 +112,18 @@ describe AspectMembershipsController do
       response.should redirect_to :back
       @aspect0.reload
       @aspect0.contacts.include?(@contact).should be false
+    end
+
+    context 'json' do
+      it 'generates a jasmine fixture', :fixture => true do
+        delete :destroy,
+          :id => 123,
+          :person_id => bob.person.id,
+          :aspect_id => @aspect0.id,
+          :format => 'json'
+
+        save_fixture(response.body, "ajax_remove_from_aspect")
+      end
     end
 
     context 'aspect membership does not exist' do

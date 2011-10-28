@@ -322,6 +322,14 @@ describe PeopleController do
         get :show, :id => @user.person.id
         assigns[:stream].posts.map{|x| x.id}.should include(reshare.id)
       end
+
+      context 'fixtures' do
+        it 'generates a jasmine fixture', :fixture => true do
+          get :show, :id => @person.id
+
+          save_fixture(html_for("body"), "people_show")
+        end
+      end
     end
   end
 
