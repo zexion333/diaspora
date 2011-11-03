@@ -21,7 +21,10 @@ class Contact < ActiveRecord::Base
 
   before_destroy :destroy_notifications
 
-  # contact.sharing is true when contact.person is sharing with contact.user
+
+  scope :all_contacts_of_person, lambda {|x| where(:person_id => x.id)}
+  
+    # contact.sharing is true when contact.person is sharing with contact.user
   scope :sharing, lambda {
     where(:sharing => true)
   }
