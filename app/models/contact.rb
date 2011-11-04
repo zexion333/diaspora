@@ -64,7 +64,7 @@ class Contact < ActiveRecord::Base
   end
 
   def receive_shareable(shareable)
-    ShareVisibility.create!(:shareable_id => shareable.id, :shareable_type => shareable.class.base_class.to_s, :contact_id => self.id)
+    ShareVisibility.create(:shareable_id => shareable.id, :shareable_type => shareable.class.base_class.to_s, :contact_id => self.id)
     shareable.socket_to_user(self.user, :aspect_ids => self.aspect_ids) if shareable.respond_to? :socket_to_user
   end
 
