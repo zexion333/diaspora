@@ -36,15 +36,15 @@ class Conversation < ActiveRecord::Base
   def participant_handles
     self.participants.map{|p| p.diaspora_handle}.join(";")
   end
-  
+
   def participant_handles= handles
     handles.split(';').each do |handle|
       self.participants << Webfinger.new(handle).fetch
     end
   end
-  
-  def participant_users
-    @participant_users ||= lambda do
+
+  def users_to_be_notified(user)
+    @users_to_be_notified ||= lambda do
       user_ids = self.participants.map {|p| p.owner_id}.compact
       User.where(:id => user_ids)
     end.call

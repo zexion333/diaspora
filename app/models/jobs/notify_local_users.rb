@@ -10,7 +10,14 @@ module Jobs
 
     def self.perform(user_ids, object_klass, object_id, person_id)
       object = object_klass.constantize.find_by_id(object_id)
-      users = object.participant_users
+
+      user = object.author.owner
+      users = object.users_to_be_notified(user)
+
+      pp '=================================================='
+      pp users
+      pp '=================================================='
+
       person = Person.find_by_id(person_id)
       users.each do |user|
         Notification.notify(user, object, person)

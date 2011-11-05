@@ -34,7 +34,7 @@ class Notification < ActiveRecord::Base
         else
           nil
         end
-       end
+      end
     end
   end
 

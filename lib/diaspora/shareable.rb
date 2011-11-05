@@ -107,9 +107,22 @@ module Diaspora
       end
     end
 
+    # @return [Array<User>] The list of participants to this shareable
+    def users_to_be_notified(user)
+      @users_to_be_notified ||= lambda do
+        user_ids = people_to_be_notified(user).map{|x| x.owner_id}.compact
+
+        pp user_ids
+
+        User.where(:id => user_ids)
+      end.call
+    end
+
+    protected
+
     # @return [Array<Person>] The list of participants to this shareable
-    def participants
-      @participants ||= lambda do
+    def people_to_be_notified(user)
+      @people_to_be_notified ||= lambda do
         share_type = self.class.base_class.to_s
         people = []
         if self.respond_to? :comments
@@ -122,15 +135,6 @@ module Diaspora
         people
       end.call
     end
-
-    def participant_users
-      @participant_users ||= lambda do
-        user_ids = participants.map{|x| x.owner_id}.compact
-        User.where(:id => user_ids)
-      end.call
-    end
-
-    protected
 
     # @return [Shareable,void]
     def persisted_shareable

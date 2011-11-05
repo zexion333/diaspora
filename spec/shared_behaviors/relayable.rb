@@ -89,6 +89,21 @@ describe Diaspora::Relayable do
           @object_by_recipient.subscribers(@local_leia).map(&:id).should =~ [@local_luke.person].map(&:id)
         end
       end
+
+      describe '#users_to_be_notified' do
+        it 'returns no users if the post does not have any, and the post is owned by the user' do
+          @object_by_parent_author.users_to_be_notified(@local_luke).map(&:id).should == []
+        end
+
+        it 'returns the posts original participants, if the post is owned by the user' do
+          @object_by_recipient.save
+          @object_by_recipient.users_to_be_notified(@local_luke).map(&:id).should include(@local_leia.id)
+        end
+
+        it 'returns the owner of the original post, if the user owns the object' do
+          @object_by_recipient.users_to_be_notified(@local_leia).map(&:id).should include(@local_luke.id)
+        end
+      end
     end
   end
 end

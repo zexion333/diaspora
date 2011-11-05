@@ -7,7 +7,12 @@ class Postzord::Dispatcher
   require File.join(Rails.root, 'lib/postzord/dispatcher/private')
   require File.join(Rails.root, 'lib/postzord/dispatcher/public')
 
-  attr_reader :sender, :object, :xml, :subscribers
+
+  # :sender is guaranteed to be a [User]
+  attr_reader :sender,
+              :object,
+              :xml,
+              :subscribers
 
   # @return [Postzord::Dispatcher] Public or private dispatcher depending on the object's intended audience
   def self.build(user, object, opts={})
@@ -132,7 +137,7 @@ class Postzord::Dispatcher
   def socket_and_notify_local_users(local_people)
     local_users = fetch_local_users(local_people)
     self.notify_users(local_users)
-    local_users << @sender if @object.author.local?
+    local_users << @sender
     self.socket_to_users(local_users)
   end
 

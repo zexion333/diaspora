@@ -35,6 +35,7 @@ module Diaspora
       self.parent = parent_class.where(:guid => new_parent_guid).first
     end
 
+    # @param user [User] Sender of the relayable object
     # @return [Array<Person>]
     def subscribers(user)
       if user.owns?(self.parent)
@@ -46,12 +47,14 @@ module Diaspora
       end
     end
 
-    def particpants
-      self.parent.participants
-    end
-
-    def participant_users
-      self.parent.participant_users
+    def users_to_be_notified(user)
+      if user.owns?(self.parent)
+        self.parent.users_to_be_notified(user) - [user]
+      elsif user.owns?(self)
+        [user]
+      else
+        []
+      end
     end
 
     def receive(user, person=nil)

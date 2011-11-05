@@ -195,15 +195,14 @@ describe Post do
     end
   end
 
-  describe '#participants' do
+  describe '#people_to_be_notified' do
     it 'only returns the people that commented and liked the post' do
       status = Factory(:status_message, :author => bob.person, :public => true)
       alice.comment('too', :post => status)
       eve.like(true, :target => status)
 
-      status.participants.map(&:id).should =~ [alice, eve].map{|x| x.person.id}
+      status.send(:people_to_be_notified, bob).map(&:id).should =~ [alice, eve].map{|x| x.person.id}
     end
-
   end
 
   describe '#comments' do
